@@ -32,6 +32,15 @@ export class CreateUserUseCase {
 			throw new Error("Passwords do not match");
 		}
 
+		// check if its a valid email
+		const isEmail =
+			/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(
+				email
+			);
+		if (!isEmail) {
+			throw new Error("Email is not valid!");
+		}
+
 		// hash password
 		const hashedPassword = await hash(password, 10);
 

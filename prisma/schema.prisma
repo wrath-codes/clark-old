@@ -28,3 +28,45 @@ model Users {
   @@unique([firstName, lastName])
   @@map("users")
 }
+
+model Operators {
+  id      String  @id @default(uuid())
+  name    String  @unique
+  slug    String? @unique
+  cnpj    String  @unique
+  website String? @unique
+
+  address Address?
+  login   Login?
+
+  @@map("operators")
+}
+
+model Address {
+  id         String  @id @default(uuid())
+  street     String
+  number     String
+  complement String?
+  city       String
+  state      String
+  country    String
+  zipCode    String
+  latitude   Float?
+  longitude  Float?
+
+  operator   Operators? @relation(fields: [operatorId], references: [id])
+  operatorId String?    @unique
+
+  @@map("addresses")
+}
+
+model Login {
+  id       String @id @default(uuid())
+  username String
+  password String
+
+  operator   Operators @relation(fields: [operatorId], references: [id])
+  operatorId String    @unique
+
+  @@map("logins")
+}
