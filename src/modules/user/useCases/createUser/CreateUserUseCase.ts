@@ -2,7 +2,8 @@ import { hash } from 'bcrypt';
 import { prisma } from "../../../../database/prismaClient";
 
 interface ICreateUser {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   passwordConfirmation: string;
@@ -10,9 +11,9 @@ interface ICreateUser {
 }
 
 export class CreateUserUseCase {
-  async execute({ name, email, password, passwordConfirmation, isAdmin}: ICreateUser) {
+  async execute({ firstName, lastName, email, password, passwordConfirmation, isAdmin }: ICreateUser) {
     // check if user with same email already exists
-    const userExists = await prisma.user.findFirst({
+    const userExists = await prisma.users.findFirst({
       where: { email },
     });
     if (userExists) {
@@ -27,13 +28,16 @@ export class CreateUserUseCase {
     // hash password
     const hashedPassword = await hash(password, 10);
 
+    console.log(isAdmin, firstName, lastName);
+
     // save user in database
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         password: hashedPassword,
-        isAdmin: isAdmin || false,
+        isAdmin,
       },
     });
 

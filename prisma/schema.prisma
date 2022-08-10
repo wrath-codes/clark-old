@@ -12,13 +12,19 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
+model Users {
+  id        String @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String @unique
   password  String
+
   create_at DateTime @default(now())
   isAdmin   Boolean  @default(false)
 
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+
+  @@unique([firstName, lastName])
   @@map("users")
 }
