@@ -1,24 +1,27 @@
 import { prisma } from "../../../../database/prismaClient";
 
-export class DeleteUserUseCase {
+export class TurnUserAdminUseCase {
 	async execute(id_user: string) {
 		// check if user exists
-		const user = await prisma.users.findFirst({
+		const userExists = await prisma.users.findFirst({
 			where: {
 				id: id_user,
 			},
 		});
-
-		if (!user) {
+		if (!userExists) {
 			throw new Error("User does not exist!");
 		}
 
-		// delete user
-		await prisma.users.delete({
+		// update user
+		const user = await prisma.users.update({
+			data: {
+				isAdmin: true,
+			},
 			where: {
 				id: id_user,
 			},
 		});
-		return true;
+
+		return user;
 	}
 }
