@@ -36,16 +36,17 @@ model Operators {
   cnpj    String  @unique
   website String? @unique
 
-  address Address?
-  login   Login?
+  address OperatorAddresses?
+  login   Logins?
+  contact OperatorContacts?
 
   @@map("operators")
 }
 
-model Address {
+model OperatorAddresses {
   id         String  @id @default(uuid())
   street     String
-  number     String
+  number     Int
   complement String?
   city       String
   state      String
@@ -54,19 +55,32 @@ model Address {
   latitude   Float?
   longitude  Float?
 
-  operator   Operators? @relation(fields: [operatorId], references: [id])
+  operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
   operatorId String?    @unique
 
-  @@map("addresses")
+  @@map("operatorAddresses")
 }
 
-model Login {
+model Logins {
   id       String @id @default(uuid())
   username String
   password String
 
-  operator   Operators @relation(fields: [operatorId], references: [id])
+  operator   Operators @relation(fields: [operatorId], references: [id], onDelete: Cascade)
   operatorId String    @unique
 
   @@map("logins")
+}
+
+model OperatorContacts {
+  id        String @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String @unique
+  cellphone String
+
+  operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  operatorId String?    @unique
+
+  @@map("operatorContacts")
 }

@@ -7,5 +7,26 @@
       "esnext"
     ],
     "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@database/*": [
+        "./src/database/*"
+      ],
+      "@routes/*": [
+        "./src/routes/*"
+      ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
+      ],
+      "@user/*": [
+        "./src/modules/user/useCases/*"
+      ],
+      "@operator/*": [
+        "./src/modules/health/operator/useCases/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+    }
   }
 }

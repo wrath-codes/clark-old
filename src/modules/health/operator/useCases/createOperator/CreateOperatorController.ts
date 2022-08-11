@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { CreateOperatorUseCase } from "./CreateOperatorUseCase";
+
+import { CreateOperatorUseCase } from "@operator/createOperator/CreateOperatorUseCase";
 
 export class CreateOperatorController {
 	async handle(request: Request, response: Response) {
@@ -13,6 +14,6 @@ export class CreateOperatorController {
 			website,
 		});
 
-		return response.json(operator);
+		return response.status(201).json(operator);
 	}
 }

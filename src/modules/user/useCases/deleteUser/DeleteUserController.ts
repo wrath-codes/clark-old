@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { DeleteUserUseCase } from "./DeleteUserUseCase";
+
+import { DeleteUserUseCase } from "@user/deleteUser/DeleteUserUseCase";
 
 export class DeleteUserController {
 	async handle(request: Request, response: Response) {

@@ -1,4 +1,4 @@
-import { prisma } from "../../../../database/prismaClient";
+import { prisma } from "@database/prismaClient";
 
 export class TurnUserRegularUseCase {
 	async execute(id_user: string) {

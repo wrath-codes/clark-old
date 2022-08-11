@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { UpdateUserInfoUseCase } from "./UpdateUserInfoUseCase";
+
+import { UpdateUserInfoUseCase } from "@user/updateUserInfo/UpdateUserInfoUseCase";
 
 export class UpdateUserInfoController {
 	async handle(request: Request, response: Response) {

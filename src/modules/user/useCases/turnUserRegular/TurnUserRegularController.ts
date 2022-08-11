@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { TurnUserRegularUseCase } from "./TurnUserRegularUseCase";
+
+import { TurnUserRegularUseCase } from "@user/turnUserRegular/TurnUserRegularUseCase";
 
 export class TurnUserRegularController {
 	async handle(request: Request, response: Response) {

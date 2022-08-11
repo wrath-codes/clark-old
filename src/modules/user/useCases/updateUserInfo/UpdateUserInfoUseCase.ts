@@ -1,4 +1,4 @@
-import { prisma } from "../../../../database/prismaClient";
+import { prisma } from "@database/prismaClient";
 
 interface IUpdateUserInfo {
 	id_user: string;
@@ -17,17 +17,6 @@ export class UpdateUserInfoUseCase {
 		});
 		if (!userExists) {
 			throw new Error("User does not exist!");
-		}
-
-		// check if email is an email
-		if (email) {
-			const isEmail =
-				/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(
-					email
-				);
-			if (!isEmail) {
-				throw new Error("Email is not valid!");
-			}
 		}
 
 		// update user

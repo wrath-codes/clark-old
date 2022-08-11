@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { FindUserUseCase } from "./FindUserUseCase";
+
+import { FindUserUseCase } from "@user/findUser/FindUserUseCase";
 
 export class FindUserController {
 	async handle(request: Request, response: Response) {

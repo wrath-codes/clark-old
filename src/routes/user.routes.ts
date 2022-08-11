@@ -1,15 +1,27 @@
 import { Router } from "express";
-import { CreateUserController } from "../modules/user/useCases/createUser/CreateUserController";
-import { DeleteUserController } from "../modules/user/useCases/deleteUser/DeleteUserController";
-import { FindAllUsersController } from "../modules/user/useCases/findAllUsers/FindAllUsersController";
-import { FindUserController } from "../modules/user/useCases/findUser/FindUserController";
-import { TurnUserAdminController } from "../modules/user/useCases/turnUserAdmin/TurnUserAdminController";
-import { TurnUserRegularController } from "./../modules/user/useCases/turnUserRegular/TurnUserRegularController";
-import { UpdateUserInfoController } from "./../modules/user/useCases/updateUserInfo/UpdateUserInfoUseController";
 
+// middlewares
+import {
+	userExistsEmail,
+	userExistsId,
+} from "@middlewares/existsCheck/userExists";
+import { passwordCheck } from "@middlewares/passwordCheck";
+import { providedUser } from "@middlewares/providedCheck/providedUser";
+import { regexEmail } from "@middlewares/regexCheck/regexEmail";
+
+// controllers import
+import { CreateUserController } from "@user/createUser/CreateUserController";
+import { DeleteUserController } from "@user/deleteUser/DeleteUserController";
+import { FindAllUsersController } from "@user/findAllUsers/FindAllUsersController";
+import { FindUserController } from "@user/findUser/FindUserController";
+import { TurnUserAdminController } from "@user/turnUserAdmin/TurnUserAdminController";
+import { TurnUserRegularController } from "@user/turnUserRegular/TurnUserRegularController";
+import { UpdateUserInfoController } from "@user/updateUserInfo/UpdateUserInfoController";
+
+// router creation
 const userRoutes = Router();
 
-// controllers
+// controllers creation
 const createUserController = new CreateUserController();
 const findUserController = new FindUserController();
 const findAllUsersController = new FindAllUsersController();
@@ -18,13 +30,22 @@ const updateUserInfoController = new UpdateUserInfoController();
 const turnUserAdminController = new TurnUserAdminController();
 const turnUserRegularController = new TurnUserRegularController();
 
+/** ------------------------------------------------------------------------------ */
+
 /**
  * @route POST /api/user
  * @desc Create a new user
  * @access Public
  * @returns {object} user
  */
-userRoutes.post("/", createUserController.handle);
+userRoutes.post(
+	"/",
+	providedUser,
+	regexEmail,
+	passwordCheck,
+	userExistsEmail,
+	createUserController.handle
+);
 
 /**
  * @route GET /api/user
@@ -40,7 +61,7 @@ userRoutes.get("/", findAllUsersController.handle);
  * @access Public
  * @returns {object} user
  */
-userRoutes.get("/:id_user", findUserController.handle);
+userRoutes.get("/:id_user", userExistsId, findUserController.handle);
 
 /**
  * @route DELETE /api/user/:id_user
@@ -48,7 +69,7 @@ userRoutes.get("/:id_user", findUserController.handle);
  * @access Public
  * @returns {object} user
  */
-userRoutes.delete("/:id_user", deleteUserController.handle);
+userRoutes.delete("/:id_user", userExistsId, deleteUserController.handle);
 
 /**
  * @route PUT /api/user/:id_user
@@ -56,7 +77,12 @@ userRoutes.delete("/:id_user", deleteUserController.handle);
  * @access Public
  * @returns {object} user
  */
-userRoutes.put("/:id_user", updateUserInfoController.handle);
+userRoutes.put(
+	"/:id_user",
+	regexEmail,
+	userExistsId,
+	updateUserInfoController.handle
+);
 
 /**
  * @route PATCH /api/user/turnAdmin/:id_user
@@ -64,7 +90,11 @@ userRoutes.put("/:id_user", updateUserInfoController.handle);
  * @access Public
  * @returns {object} user
  */
-userRoutes.patch("/turnAdmin/:id_user", turnUserAdminController.handle);
+userRoutes.patch(
+	"/turnAdmin/:id_user",
+	userExistsId,
+	turnUserAdminController.handle
+);
 
 /**
  * @route PATCH /api/user/turnRegular/:id_user
@@ -72,6 +102,12 @@ userRoutes.patch("/turnAdmin/:id_user", turnUserAdminController.handle);
  * @access Public
  * @returns {object} user
  */
-userRoutes.patch("/turnRegular/:id_user", turnUserRegularController.handle);
+userRoutes.patch(
+	"/turnRegular/:id_user",
+	userExistsId,
+	turnUserRegularController.handle
+);
+
+/** ------------------------------------------------------------------------------ */
 
 export { userRoutes };
