@@ -1,31 +1,32 @@
 // libraries imports
 import { Router } from "express";
+import multer from "multer";
 
 // middlewares imports
-import { operatorAddressCheck } from "@middlewares/existsCheck/operatorAddressCheck";
 import { operatorContactCheck } from "@middlewares/existsCheck/operatorContactCheck";
 import {
 	operatorExistsCNPJ,
 	operatorExistsId,
 } from "@middlewares/existsCheck/operatorExists";
-import { providedAdress } from "@middlewares/providedCheck/providedAddress";
 import { providedContact } from "@middlewares/providedCheck/providedContact";
+import { providedLogin } from "@middlewares/providedCheck/providedLogin";
 import { providedOperator } from "@middlewares/providedCheck/providedOperator";
 import { regexCNPJ } from "@middlewares/regexCheck/regexCNPJ";
 import { regexEmail } from "@middlewares/regexCheck/regexEmail";
 import { regexWebsite } from "@middlewares/regexCheck/regexWebsite";
-import { regexZipCode } from "@middlewares/regexCheck/regexZipcode";
 import { regexCellphone } from "./../../middlewares/regexCheck/regexCellphone";
 
 // controller imports
+import { operatorAddressCheck } from "@middlewares/existsCheck/operatorAddressCheck";
+import { operatorLoginCheck } from "@middlewares/existsCheck/operatorLoginCheck";
+import { providedAdress } from "@middlewares/providedCheck/providedAddress";
+import { regexZipCode } from "@middlewares/regexCheck/regexZipcode";
 import { CreateOperatorController } from "@operator/createOperator/CreateOperatorController";
 import { CreateOperatorAddressController } from "@operator/createOperatorAdress/CreateOperatorAddressController";
 import { CreateOperatorLoginController } from "@operator/createOperatorLogin/CreateOperatorLoginControler";
 import { FindOperatorController } from "@operator/findOperator/FindOperatorController";
+import { ImportOperatorsController } from "@operator/importOperators/ImportOperatorsController";
 import { CreateOperatorContactController } from "./../../modules/health/operator/useCases/createOperatorContact/CreateOperatorContactController";
-
-// router definition
-const operatorRoutes = Router();
 
 // controller declarations
 const createOperatorController = new CreateOperatorController();
@@ -33,6 +34,14 @@ const findOperatorController = new FindOperatorController();
 const createOperatorAddressController = new CreateOperatorAddressController();
 const createOperatorContactController = new CreateOperatorContactController();
 const createOperatorLoginController = new CreateOperatorLoginController();
+const importOperatorsController = new ImportOperatorsController();
+
+// router definition
+const operatorRoutes = Router();
+// upload folder definition
+const upload = multer({
+	dest: "./tmp",
+});
 
 /**
  * @router POST /operators
@@ -71,7 +80,6 @@ operatorRoutes.post(
 	providedAdress,
 	regexZipCode,
 	operatorAddressCheck,
-	operatorExistsId,
 	createOperatorAddressController.handle
 );
 
@@ -96,10 +104,27 @@ operatorRoutes.post(
 	createOperatorContactController.handle
 );
 
+/**
+ * @router POST /operators/createLogin/:id_operator
+ * @description Create a login for an operator
+ * @access Public
+ * @params id_operator: string - id of the operator
+ * @body username: string - username of the login
+ * @body password: string - password of the login
+ * @returns {object} - operator with login created
+ */
 operatorRoutes.post(
 	"/createLogin/:id_operator",
+	providedLogin,
+	operatorLoginCheck,
 	operatorExistsId,
 	createOperatorLoginController.handle
+);
+
+operatorRoutes.post(
+	"/import",
+	upload.single("file"),
+	importOperatorsController.handle
 );
 
 /**

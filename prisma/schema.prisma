@@ -4,6 +4,7 @@
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
@@ -44,16 +45,17 @@ model Operators {
 }
 
 model OperatorAddresses {
-  id         String  @id @default(uuid())
-  street     String
-  number     Int
-  complement String?
-  city       String
-  state      String
-  country    String
-  zipCode    String
-  latitude   Float?
-  longitude  Float?
+  id           String  @id @default(uuid())
+  street       String
+  number       Int
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  country      String
+  zipCode      String
+  latitude     Float?
+  longitude    Float?
 
   operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
   operatorId String?    @unique

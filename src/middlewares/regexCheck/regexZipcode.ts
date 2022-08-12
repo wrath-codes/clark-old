@@ -18,7 +18,15 @@ export const regexZipCode = async (
 		return next();
 	}
 
-	if (!/^[0-9]{5}-[0-9]{3}$/.test(zipCode)) {
+	if (zipCode.length !== 8) {
+		throw new Error("Zipcode needs to be 8 digits");
+	}
+
+	const test = zipCode.slice(0, 5);
+	const test2 = zipCode.slice(5, 8);
+	const result = test + "-" + test2;
+
+	if (!/^[0-9]{5}-[0-9]{3}$/.test(result)) {
 		throw new Error("Zipcode is not valid!");
 	}
 
