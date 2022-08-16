@@ -15,16 +15,17 @@ import { providedAdress } from "@middlewares/providedCheck/providedAddress";
 import { providedContact } from "@middlewares/providedCheck/providedContact";
 import { providedLogin } from "@middlewares/providedCheck/providedLogin";
 import { providedOperator } from "@middlewares/providedCheck/providedOperator";
+import { regexCellphone } from "@middlewares/regexCheck/regexCellphone";
 import { regexCNPJ } from "@middlewares/regexCheck/regexCNPJ";
 import { regexEmail } from "@middlewares/regexCheck/regexEmail";
 import { regexWebsite } from "@middlewares/regexCheck/regexWebsite";
 import { regexZipCode } from "@middlewares/regexCheck/regexZipcode";
-import { regexCellphone } from "./../../middlewares/regexCheck/regexCellphone";
 
 // controller imports
 import { CreateOperatorController } from "@operator/createOperator/CreateOperatorController";
 import { CreateOperatorAddressController } from "@operator/createOperatorAdress/CreateOperatorAddressController";
 import { CreateOperatorLoginController } from "@operator/createOperatorLogin/CreateOperatorLoginControler";
+import { DeleteOperatorController } from "@operator/deleteOperatorUseCase/deleteOperatorController";
 import { FindAllOperatorsController } from "@operator/findAllOperators/FindAllOperatorsController";
 import { FindOperatorController } from "@operator/findOperator/FindOperatorController";
 import { ImportOperatorsController } from "@operator/importOperators/ImportOperatorsController";
@@ -42,6 +43,7 @@ const importOperatorsController = new ImportOperatorsController();
 const findAllOperatorsController = new FindAllOperatorsController();
 const updateOperatorLoginController = new UpdateOperatorLoginController();
 const updateOperatorContactController = new UpdateOperatorContactController();
+const deleteOperatorController = new DeleteOperatorController();
 
 // router definition
 const operatorRoutes = Router();
@@ -185,6 +187,19 @@ operatorRoutes.put(
 	"/updateContact/:id_operator",
 	operatorExistsId,
 	updateOperatorContactController.handle
+);
+
+/**
+ * @router DELETE /operators/:id_operator
+ * @description Delete an operator by id
+ * @access Public
+ * @params id_operator: string - id of the operator
+ * @returns message: string - operator deleted successfully
+ */
+operatorRoutes.delete(
+	"/:id_operator",
+	operatorExistsId,
+	deleteOperatorController.handle
 );
 
 export { operatorRoutes };
