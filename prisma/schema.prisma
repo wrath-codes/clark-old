@@ -32,10 +32,10 @@ model Users {
 
 model Operators {
   id      String  @id @default(uuid())
-  name    String  @unique
-  slug    String? @unique
+  name    String
+  slug    String?
   cnpj    String  @unique
-  website String? @unique
+  website String?
 
   address OperatorAddresses?
   login   Logins?

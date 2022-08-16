@@ -4,24 +4,25 @@ import { NextFunction, Request, Response } from "express";
 /** ------------------------------------------------------------------------------ */
 /**
  * @description checks if operator contact exists
- * @param request.params.id_operator
+ * @param request.body.email
  */
 /** ------------------------------------------------------------------------------ */
-export const operatorContactCheck = async (
+export const operatorContactInUse = async (
 	request: Request,
 	response: Response,
 	next: NextFunction
 ) => {
-	const { id_operator } = request.params;
+	const { email } = request.body;
 
-	// checks if this operator already has an contact
-	const contact = await prisma.operatorContacts.findFirst({
+	// checks if this operator already has an address
+	const emailInUse = await prisma.operatorContacts.findFirst({
 		where: {
-			operatorId: id_operator,
+			email: email,
 		},
 	});
-	if (contact) {
-		throw new Error("This operator already has an contact");
+	if (emailInUse) {
+		throw new Error("This email is already in use");
 	}
+
 	return next();
 };

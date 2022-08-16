@@ -14,12 +14,7 @@ export const providedOperator = async (
 	response: Response,
 	next: NextFunction
 ) => {
-	const { website, cnpj, name } = request.body;
-
-	// checks if a name was provided
-	if (!name) {
-		throw new Error("Name was not provided!");
-	}
+	const { website, cnpj } = request.body;
 	// checks if a website was provided
 	if (!website) {
 		throw new Error("Website is not provided!");

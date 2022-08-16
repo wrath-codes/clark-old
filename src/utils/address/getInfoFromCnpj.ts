@@ -17,8 +17,9 @@ export const operatorInfo = async (cnpj: string): Promise<any> => {
 		})
 		.then((data) => {
 			return {
-				name: data.company.name,
+				name: data.alias !== null ? data.alias : data.company.name,
 				cnpj: data.taxId,
+				address: data.address,
 			};
 		});
 };
