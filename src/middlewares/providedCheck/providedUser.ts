@@ -1,18 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
-/**
- * @description checks if user is provided
- * @param request.body.email
- * @param request.body.password
- * @param request.body.passwordConfirmation
- * @param request.body.firstName
- * @param request.body.lastName
- * @passed true if all fields were provided
- * @throws {object} - error message
- */
-/** ------------------------------------------------------------------------------ */
-
 interface IProvidedUser {
 	email: string;
 	password: string;
@@ -21,6 +8,18 @@ interface IProvidedUser {
 	lastName: string;
 }
 
+/**
+ * @description This function is responsible for checking if the user was provided
+ * @body {email} email of the user
+ * @body {password} password of the user
+ * @body {passwordConfirmation} password confirmation of the user
+ * @body {firstName} first name of the user
+ * @body {lastName} last name of the user
+ * @passes true if the user was provided
+ * @throws {Error} if the user was not provided
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
+ */
 export const providedUser = async (
 	request: Request,
 	response: Response,
@@ -61,4 +60,3 @@ export const providedUser = async (
 
 	return next();
 };
-/** ------------------------------------------------------------------------------ */

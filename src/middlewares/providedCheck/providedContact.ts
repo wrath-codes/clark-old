@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */ /**
+/**
  * @description checks if contact was provided
- * @param request.body.firstName: string - first name of the contact
- * @param request.body.lastName: string - last name of the contact
- * @param request.body.email: string - email of the contact
- * @param request.body.cellphone: string - cellphone of the contact
+ * @body {email: string - email of the contact}
+ * @body {firstName: string - first name of the contact}
+ * @body {lastName: string - last name of the contact}
+ * @body {cellphone: string - cellphone of the contact}
  * @passed true if all fields were provided
  * @throws {object} - error message
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const providedContact = async (
 	request: Request,
 	response: Response,

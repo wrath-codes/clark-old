@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if website is valid
- * @param request.body.website
+ * @description This function is responsible for checking if the website is valid
+ * @body {website} website of the operator
+ * @passes true if the website is valid
+ * @throws {Error} if the website is not valid
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const regexWebsite = async (
 	request: Request,
 	response: Response,
@@ -28,4 +30,3 @@ export const regexWebsite = async (
 
 	return next();
 };
-/** ------------------------------------------------------------------------------ */

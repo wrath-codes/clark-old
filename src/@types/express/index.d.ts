@@ -4,5 +4,18 @@ declare namespace Express {
 		id_operator: string;
 		idToken: string;
 		ttl: number;
+		cnpj_info: {
+			name: string;
+			cnpj: string;
+			address: {
+				street: string;
+				number: number;
+				complement?: string;
+				neighborhood: string;
+				city: string;
+				state: string;
+				zipCode: string;
+			};
+		};
 	}
 }

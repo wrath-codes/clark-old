@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if email is valid
- * @param request.body.password
- * @param request.body.passwordConfirmation
+ * @description This function is responsible for checking if the password if following the rules
+ * @body {password} password of the user
+ * @passes true if the password is valid
+ * @throws {Error} if the password is not valid
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const passwordCheck = async (
 	request: Request,
 	response: Response,
@@ -40,5 +41,3 @@ export const passwordCheck = async (
 	}
 	return next();
 };
-
-/** ------------------------------------------------------------------------------ */

@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */ /**
- * @description checks if Login was provided
-
+/**
+ * @description checks if login was provided
+ * @body {username: string - username of the login}
+ * @body {password: string - password of the login}
+ * @passed true if all fields were provided
+ * @throws {object} - error message
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const providedLogin = async (
 	request: Request,
 	response: Response,

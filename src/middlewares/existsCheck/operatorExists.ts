@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/prismaClient";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if operator with the same id already exists
- * @param request.params.id_operator
+ * @description This function is responsible for checking if the operator exists in the database by id
+ * @params {id_operator} id of the operator
+ * @throws {Error} if the operator already exists
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const operatorExistsId = async (
 	request: Request,
 	response: Response,
@@ -25,12 +26,13 @@ export const operatorExistsId = async (
 	return next();
 };
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if user with the same email already exists
- * @param request.body.cnpj
+ * @description This function is responsible for checking if the operator exists in the database by cnpj
+ * @body {cnpj} cnpj of the operator
+ * @throws {Error} if the operator already exists
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const operatorExistsCNPJ = async (
 	request: Request,
 	response: Response,

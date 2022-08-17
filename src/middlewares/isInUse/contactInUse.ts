@@ -1,12 +1,13 @@
 import { prisma } from "@database/prismaClient";
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if operator contact exists
- * @param request.body.email
+ * @description This function is responsible for checking if a contact is using this email
+ * @body {email} email of the contact
+ * @throws {Error} if a contact is using this email
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const operatorContactInUse = async (
 	request: Request,
 	response: Response,

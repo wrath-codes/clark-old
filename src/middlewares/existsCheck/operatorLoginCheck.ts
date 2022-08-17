@@ -1,12 +1,13 @@
 import { prisma } from "@database/prismaClient";
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if operator Login exists
- * @param request.params.id_operator
+ * @description This function is responsible for checking if the operator already has a login
+ * @params {id_operator} id of the operator
+ * @throws {Error} if the operator already has a login
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const operatorLoginCheck = async (
 	request: Request,
 	response: Response,

@@ -24,6 +24,9 @@
       "@operator/*": [
         "./src/modules/health/operator/useCases/*"
       ],
+      "@plan/*": [
+        "./src/modules/health/plan/useCases/*"
+      ],
       "@utils/*": [
         "./src/utils/*"
       ],

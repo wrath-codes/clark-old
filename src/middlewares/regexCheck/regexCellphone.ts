@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if cellphone is valid
- * @param request.body.cellphone
+ * @description This function is responsible for checking if the cellphone is valid
+ * @body {cellphone} cellphone of the user
+ * @passes true if the cellphone is valid
+ * @throws {Error} if the cellphone is not valid
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const regexCellphone = async (
 	request: Request,
 	response: Response,

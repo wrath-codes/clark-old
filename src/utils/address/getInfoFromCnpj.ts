@@ -1,11 +1,15 @@
 import fetch from "node-fetch";
 
-export const operatorInfo = async (cnpj: string): Promise<any> => {
-	return fetch(`${process.env.CNPJJA_URL}/${cnpj}`, {
+export const operatorInfo = async (
+	cnpj: string,
+	token: string
+): Promise<any> => {
+	console.log(token);
+	return fetch(`${process.env.CNPJJA_URL}/office/${cnpj}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${process.env.CNPJJA_TOKEN}`,
+			Authorization: `Bearer ${token}`,
 		},
 	})
 		.then((response) => {

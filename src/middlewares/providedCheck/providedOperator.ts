@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */ /**
- * @description checks if website was provided
- * @param request.body.website
- * @param request.body.cnpj
- * @param request.body.name
- * @passed true if all fields were provided
- * @throws {object} - error message
+/**
+ * @description This function is responsible for checking if the operator was provided
+ * @body {cnpj} cnpj of the operator
+ * @body {website} website of the operator
+ * @passes true if the operator was provided
+ * @throws {Error} if the operator was not provided
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const providedOperator = async (
 	request: Request,
 	response: Response,

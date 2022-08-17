@@ -1,45 +1,51 @@
 import { prisma } from "@database/prismaClient";
-import { operatorInfo } from "@utils/address/getInfoFromCnpj";
 import { formatCep } from "@utils/format/formatCep";
-import { formatCnpj } from "@utils/format/formatCnpj";
 import { slugifyName } from "src/utils/slugfyName";
 
-/** ------------------------------------------------------------------------------ */
 interface ICreateOperator {
 	name: string;
 	cnpj: string;
+	address: {
+		street: string;
+		number: number;
+		complement?: string;
+		neighborhood: string;
+		city: string;
+		state: string;
+		zipCode: string;
+	};
 	website: string;
 }
-/** ------------------------------------------------------------------------------ */
+
+/**
+ * @description UseCase responsible for creating an operator
+ * @author Raphael Vaz
+ */
 export class CreateOperatorUseCase {
-	async execute({ cnpj, website }: ICreateOperator) {
-		const cnpjFormatted = await formatCnpj(cnpj);
-
-		const info = await operatorInfo(cnpjFormatted);
-
+	async execute({ name, cnpj, address, website }: ICreateOperator) {
 		const operator = await prisma.operators.create({
 			data: {
-				name: info.name,
+				name,
 				cnpj,
 				website,
-				slug: await slugifyName(info.name),
+				slug: await slugifyName(name),
 			},
 		});
-		const formatedZipCode = await formatCep(info.address.zip);
+		const formatedZipCode = await formatCep(address.zipCode);
 
 		const operatorWithAdress = await prisma.operators.update({
 			where: { id: operator.id },
 			data: {
 				address: {
 					create: {
-						street: info.address.street,
-						number: Number(info.address.number),
-						complement: info.address.details,
-						neighborhood: info.address.district,
-						city: info.address.city,
-						state: info.address.state,
+						street: address.street,
+						number: Number(address.number),
+						complement: address.complement,
+						neighborhood: address.neighborhood,
+						city: address.city,
+						state: address.state,
 						country: "Brasil",
-						zipCode: formatedZipCode,
+						zipCode: address.zipCode,
 					},
 				},
 			},

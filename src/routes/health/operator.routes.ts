@@ -3,6 +3,8 @@ import { Router } from "express";
 import multer from "multer";
 
 // middlewares imports
+import { getCnpjJaInfoOperator } from "@middlewares/consult/getCnpjJaInfoOperator";
+import { getCnpjJaToken } from "@middlewares/consult/getCnpjJaToken";
 import { operatorAddressCheck } from "@middlewares/existsCheck/operatorAddressCheck";
 import { operatorContactCheck } from "@middlewares/existsCheck/operatorContactCheck";
 import {
@@ -25,7 +27,9 @@ import { regexZipCode } from "@middlewares/regexCheck/regexZipcode";
 import { CreateOperatorController } from "@operator/createOperator/CreateOperatorController";
 import { CreateOperatorAddressController } from "@operator/createOperatorAdress/CreateOperatorAddressController";
 import { CreateOperatorLoginController } from "@operator/createOperatorLogin/CreateOperatorLoginControler";
-import { DeleteOperatorController } from "@operator/deleteOperatorUseCase/deleteOperatorController";
+import { DeleteOperatorController } from "@operator/deleteOperator/deleteOperatorController";
+import { DeleteOperatorContactController } from "@operator/deleteOperatorContact/DeleteOperatorContactController";
+import { DeleteOperatorLoginController } from "@operator/delteOperatorLogin/DeleteOperatorLoginController";
 import { FindAllOperatorsController } from "@operator/findAllOperators/FindAllOperatorsController";
 import { FindOperatorController } from "@operator/findOperator/FindOperatorController";
 import { ImportOperatorsController } from "@operator/importOperators/ImportOperatorsController";
@@ -44,6 +48,8 @@ const findAllOperatorsController = new FindAllOperatorsController();
 const updateOperatorLoginController = new UpdateOperatorLoginController();
 const updateOperatorContactController = new UpdateOperatorContactController();
 const deleteOperatorController = new DeleteOperatorController();
+const deleteOperatorContactController = new DeleteOperatorContactController();
+const deleteOperatorLoginController = new DeleteOperatorLoginController();
 
 // router definition
 const operatorRoutes = Router();
@@ -66,6 +72,8 @@ operatorRoutes.post(
 	regexWebsite,
 	regexCNPJ,
 	operatorExistsCNPJ,
+	getCnpjJaToken,
+	getCnpjJaInfoOperator,
 	createOperatorController.handle
 );
 
@@ -132,6 +140,7 @@ operatorRoutes.post(
 
 operatorRoutes.post(
 	"/import",
+	getCnpjJaToken,
 	upload.single("file"),
 	importOperatorsController.handle
 );
@@ -200,6 +209,32 @@ operatorRoutes.delete(
 	"/:id_operator",
 	operatorExistsId,
 	deleteOperatorController.handle
+);
+
+/**
+ * @router DELETE /operators/deleteContact/:id_operator
+ * @description Delete a contact for an operator
+ * @access Public
+ * @params id_operator: string - id of the operator
+ * @returns message: string - operator with contact deleted successfully
+ */
+operatorRoutes.delete(
+	"/deleteContact/:id_operator",
+	operatorExistsId,
+	deleteOperatorContactController.handle
+);
+
+/**
+ * @router DELETE /operators/deleteLogin/:id_operator
+ * @description Delete a login for an operator
+ * @access Public
+ * @params id_operator: string - id of the operator
+ * @returns message: string - operator with login deleted successfully
+ */
+operatorRoutes.delete(
+	"/deleteLogin/:id_operator",
+	operatorExistsId,
+	deleteOperatorLoginController.handle
 );
 
 export { operatorRoutes };

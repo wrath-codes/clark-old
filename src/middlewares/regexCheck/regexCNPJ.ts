@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if CNPJ is valid
- * @param request.body.cnpj
+ * @description This function is responsible for checking if CNPJ is valid
+ * @body {cnpj} cnpj
+ * @passes true if the cnpj is valid
+ * @throws {Error} if the cnpj is not valid
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const regexCNPJ = async (
 	request: Request,
 	response: Response,
@@ -24,4 +26,3 @@ export const regexCNPJ = async (
 
 	return next();
 };
-/** ------------------------------------------------------------------------------ */

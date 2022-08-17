@@ -1,12 +1,13 @@
 import { prisma } from "@database/prismaClient";
 import { NextFunction, Request, Response } from "express";
 
-/** ------------------------------------------------------------------------------ */
 /**
- * @description checks if operator address exists
- * @param request.params.id_operator
+ * @description This function is responsible for checking if the operator already has a contact
+ * @params {id_operator} id of the operator
+ * @throws {Error} if the operator already has an address
+ * @returns {Promise<void>}
+ * @author Raphael Vaz
  */
-/** ------------------------------------------------------------------------------ */
 export const operatorAddressCheck = async (
 	request: Request,
 	response: Response,

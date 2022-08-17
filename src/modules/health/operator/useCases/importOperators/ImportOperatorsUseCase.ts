@@ -44,7 +44,7 @@ export class ImportOperatorsUseCase {
 
 	// import operators
 
-	async execute(file: Express.Multer.File): Promise<void> {
+	async execute(file: Express.Multer.File, token: string): Promise<void> {
 		const operators = await this.loadOperators(file);
 
 		operators.map(async (operator) => {
@@ -67,7 +67,7 @@ export class ImportOperatorsUseCase {
 
 				const cnpjFormatted = await formatCnpj(cnpj);
 
-				const info = await operatorInfo(cnpjFormatted);
+				const info = await operatorInfo(cnpjFormatted, token);
 
 				const formatedZipCode = await formatCep(info.address.zip);
 
@@ -107,7 +107,7 @@ export class ImportOperatorsUseCase {
 			} else {
 				const cnpjFormatted = await formatCnpj(cnpj);
 
-				const info = await operatorInfo(cnpjFormatted);
+				const info = await operatorInfo(cnpjFormatted, token);
 				// create operator
 				const operator = await prisma.operators.create({
 					data: {
