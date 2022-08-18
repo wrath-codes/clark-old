@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { operatorRoutes } from "@routes/health/operator.routes";
+import { operatorRoutes } from "@routes/health/operators/index.routes";
 
 const healthRoutes = Router();
 

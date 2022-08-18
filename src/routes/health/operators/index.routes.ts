@@ -33,9 +33,13 @@ import { DeleteOperatorLoginController } from "@operator/delteOperatorLogin/Dele
 import { FindAllOperatorsController } from "@operator/findAllOperators/FindAllOperatorsController";
 import { FindOperatorController } from "@operator/findOperator/FindOperatorController";
 import { ImportOperatorsController } from "@operator/importOperators/ImportOperatorsController";
+import { SearchOperatorOutsideController } from "@operator/searchOperatorOutside/SearchOperatorOutsideController";
 import { UpdateOperatorContactController } from "@operator/updateOperatorContact/UpdateOperatorContactController";
 import { UpdateOperatorLoginController } from "@operator/updateOperatorLogin/UpdateOperatorLoginController";
-import { CreateOperatorContactController } from "./../../modules/health/operator/useCases/createOperatorContact/CreateOperatorContactController";
+import { CreateOperatorContactController } from "../../../modules/health/operator/useCases/createOperatorContact/CreateOperatorContactController";
+
+// import other routers
+import { planRoutes } from "./plans.routes";
 
 // controller declarations
 const createOperatorController = new CreateOperatorController();
@@ -50,9 +54,11 @@ const updateOperatorContactController = new UpdateOperatorContactController();
 const deleteOperatorController = new DeleteOperatorController();
 const deleteOperatorContactController = new DeleteOperatorContactController();
 const deleteOperatorLoginController = new DeleteOperatorLoginController();
+const searchOperatorOutsideController = new SearchOperatorOutsideController();
 
 // router definition
 const operatorRoutes = Router();
+operatorRoutes.use("/:id_operator/plans", planRoutes);
 // upload folder definition
 const upload = multer({
 	dest: "./tmp",
@@ -235,6 +241,12 @@ operatorRoutes.delete(
 	"/deleteLogin/:id_operator",
 	operatorExistsId,
 	deleteOperatorLoginController.handle
+);
+
+operatorRoutes.get(
+	"/getOutside/:cnpj_operator",
+	getCnpjJaToken,
+	searchOperatorOutsideController.handle
 );
 
 export { operatorRoutes };

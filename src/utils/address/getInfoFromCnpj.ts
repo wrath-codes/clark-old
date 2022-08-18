@@ -4,7 +4,6 @@ export const operatorInfo = async (
 	cnpj: string,
 	token: string
 ): Promise<any> => {
-	console.log(token);
 	return fetch(`${process.env.CNPJJA_URL}/office/${cnpj}`, {
 		method: "GET",
 		headers: {
