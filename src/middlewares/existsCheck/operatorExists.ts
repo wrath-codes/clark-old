@@ -4,7 +4,7 @@ import { prisma } from "../../database/prismaClient";
 /**
  * @description This function is responsible for checking if the operator exists in the database by id
  * @params {id_operator} id of the operator
- * @throws {Error} if the operator already exists
+ * @throws {Error} if the operator doesn't exist
  * @returns {Promise<void>}
  * @author Raphael Vaz
  */

@@ -13,6 +13,8 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+// USER MODEL
+
 model Users {
   id        String @id @default(uuid())
   firstName String
@@ -30,6 +32,8 @@ model Users {
   @@map("users")
 }
 
+// OPERATORS MODEL
+
 model Operators {
   id      String  @id @default(uuid())
   name    String
@@ -40,6 +44,7 @@ model Operators {
   address OperatorAddresses?
   login   Logins?
   contact OperatorContacts?
+  plans   Plans[]
 
   @@map("operators")
 }
@@ -85,4 +90,46 @@ model OperatorContacts {
   operatorId String?    @unique
 
   @@map("operatorContacts")
+}
+
+// PLANS MODEL
+model Plans {
+  id           String    @id @default(uuid())
+  name         String
+  slug         String?
+  reach        PlanReach @default(GRUPO_ESTADOS)
+  ans_register String    @unique
+
+  operatorId String?
+  operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+
+  values PlanValues?
+
+  @@map("plans")
+}
+
+model PlanValues {
+  id String @id @default(uuid())
+
+  age_0_18     Float
+  age_19_23    Float
+  age_24_28    Float
+  age_29_33    Float
+  age_34_38    Float
+  age_39_43    Float
+  age_44_48    Float
+  age_49_53    Float
+  age_54_58    Float
+  age_59_above Float
+
+  planId String @unique
+  plan   Plans? @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+enum PlanReach {
+  MUNICIPIO
+  GRUPO_MUNICIPIOS
+  ESTADO
+  GRUPO_ESTADOS
+  NACIONAL
 }
