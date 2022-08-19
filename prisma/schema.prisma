@@ -44,7 +44,9 @@ model Operators {
   address OperatorAddresses?
   login   Logins?
   contact OperatorContacts?
-  plans   Plans[]
+
+  plans     Plans[]
+  Contracts Contracts[]
 
   @@map("operators")
 }
@@ -101,14 +103,125 @@ model Plans {
   ans_register String    @unique
 
   operatorId String?
-  operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
-
-  values PlanValues?
+  operator   Operators?  @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  PlanDeals  PlanDeals[]
 
   @@map("plans")
 }
 
-model PlanValues {
+enum PlanReach {
+  MUNICIPIO
+  GRUPO_MUNICIPIOS
+  ESTADO
+  GRUPO_ESTADOS
+  NACIONAL
+}
+
+// EMPLOYERS MODEL
+model Employers {
+  id   String  @id @default(uuid())
+  name String
+  slug String?
+  cnpj String  @unique
+
+  address EmployerAddresses?
+
+  brokerId  String?
+  broker    Brokers?    @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  Contracts Contracts[]
+
+  @@map("employers")
+}
+
+model EmployerAddresses {
+  id           String  @id @default(uuid())
+  street       String
+  number       Int
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  country      String
+  zipCode      String
+  latitude     Float?
+  longitude    Float?
+
+  employer   Employers? @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  employerId String?    @unique
+
+  @@map("employerAddresses")
+}
+
+// BROKERS MODEL
+model Brokers {
+  id   String  @id @default(uuid())
+  name String
+  slug String?
+  cnpj String  @unique
+
+  address   BrokerAddresses?
+  employers Employers[]
+
+  @@map("brokers")
+}
+
+model BrokerAddresses {
+  id           String  @id @default(uuid())
+  street       String
+  number       Int
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  country      String
+  zipCode      String
+  latitude     Float?
+  longitude    Float?
+
+  broker   Brokers? @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  brokerId String?  @unique
+
+  @@map("brokerAddresses")
+}
+
+// CONTRACTS MODEL
+model Contracts {
+  id          String         @id @default(uuid())
+  number      String         @unique
+  startDate   DateTime       @default(now())
+  endDate     DateTime?
+  status      ContractStatus @default(ATIVO)
+  description String?
+
+  employerId String?
+  employer   Employers? @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  operatorId String?
+  operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+
+  deals PlanDeals[]
+
+  @@map("contracts")
+}
+
+enum ContractStatus {
+  ATIVO
+  CANCELADO
+  EXPIRADO
+}
+
+model PlanDeals {
+  id     String @id @default(uuid())
+  planId String
+  plan   Plans? @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  values      PlanDealValues[]
+  Contracts   Contracts?       @relation(fields: [contractsId], references: [id])
+  contractsId String?
+
+  @@map("planDeals")
+}
+
+model PlanDealValues {
   id String @id @default(uuid())
 
   age_0_18     Float
@@ -122,14 +235,32 @@ model PlanValues {
   age_54_58    Float
   age_59_above Float
 
-  planId String @unique
-  plan   Plans? @relation(fields: [planId], references: [id], onDelete: Cascade)
+  dealId String
+  deal   PlanDeals? @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@map("planDealValues")
 }
 
-enum PlanReach {
-  MUNICIPIO
-  GRUPO_MUNICIPIOS
-  ESTADO
-  GRUPO_ESTADOS
-  NACIONAL
+// EMPLOYEES MODEL
+model Employees {
+  firstName     String
+  lastName      String
+  cpf           String        @unique
+  email         String        @unique
+  cellphone     String        @unique
+  dateBirth     DateTime
+  sex           Sex           @default(MASCULINO)
+  maritalStatus MaritalStatus @default(SOLTEIRO)
+}
+
+enum Sex {
+  MASCULINO
+  FEMININO
+}
+
+enum MaritalStatus {
+  SOLTEIRO
+  CASADO
+  DIVORCIADO
+  VIUVO
 }

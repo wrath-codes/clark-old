@@ -25,8 +25,6 @@ export class CreateOperatorController {
 			website,
 		});
 
-		console.log(request.cnpj_info);
-
 		return response.status(201).json(operator);
 	}
 }
