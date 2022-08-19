@@ -17,7 +17,7 @@ export const planValuesExists = async (
 	const { id_plan } = request.params;
 
 	const planValues = await prisma.planValues.findFirst({
-		where: { id: id_plan },
+		where: { planId: id_plan },
 	});
 
 	if (planValues) {
@@ -25,4 +25,24 @@ export const planValuesExists = async (
 	}
 
 	return next();
+};
+
+export const planValuesExistsDeleteUpdate = async (
+	request: Request,
+	response: Response,
+	next: NextFunction
+) => {
+	const { id_plan } = request.params;
+
+	const planValues = await prisma.planValues.findFirst({
+		where: { planId: id_plan },
+	});
+
+	console.log(planValues);
+
+	if (planValues) {
+		return next();
+	}
+
+	throw new Error("This plan doesn't have values!");
 };

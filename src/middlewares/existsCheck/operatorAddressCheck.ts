@@ -21,6 +21,7 @@ export const operatorAddressCheck = async (
 			operatorId: id_operator,
 		},
 	});
+
 	if (address) {
 		throw new Error("This operator already has an address");
 	}

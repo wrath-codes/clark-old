@@ -7,7 +7,7 @@ import { NextFunction, Request, Response } from "express";
  * @throws {object} - error message
  * @author Raphael Vaz
  */
-export const regexReach = async (
+export const providedReachUpdate = async (
 	request: Request,
 	response: Response,
 	next: NextFunction
@@ -21,7 +21,8 @@ export const regexReach = async (
 		reach === "GRUPO_MUNICIPIOS" ||
 		reach === "ESTADO" ||
 		reach === "GRUPO_ESTADOS" ||
-		reach === "NACIONAL"
+		reach === "NACIONAL" ||
+		reach === undefined
 	) {
 		return next();
 	} else {

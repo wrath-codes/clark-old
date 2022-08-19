@@ -6,6 +6,9 @@ export class FindPlanUseCase {
 			where: {
 				id: id_plan,
 			},
+			include: {
+				values: true,
+			},
 		});
 
 		return plan;

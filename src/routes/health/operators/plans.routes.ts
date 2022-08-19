@@ -6,17 +6,26 @@ import {
 	planExistsAnsRegister,
 	planExistsId,
 } from "@middlewares/existsCheck/planExists";
-import { planValuesExists } from "@middlewares/existsCheck/planValuesExists";
+import {
+	planValuesExists,
+	planValuesExistsDeleteUpdate,
+} from "@middlewares/existsCheck/planValuesExists";
 import { providedPlan } from "@middlewares/providedCheck/providedPlan";
 import { regexAnsRegister } from "@middlewares/regexCheck/regexAnsRegister";
 import { regexReach } from "@middlewares/regexCheck/regexReach";
+import { providedReachUpdate } from "./../../../middlewares/providedCheck/providedReachUpdate";
 
 // import controllers
+import { operatorPlansCheck } from "@middlewares/existsCheck/operatorPlansCheck";
 import { CreatePlanController } from "@plan/createPlan/CreatePlanController";
 import { CreatePlanValuesController } from "@plan/createPlanValues/CreatePlanValuesController";
+import { DeleteAllPlansOperatorController } from "@plan/deleteAllPlansOperator/DeleteAllPlansOperatorController";
+import { DeletePlanController } from "@plan/deletePlan/DeletePlanController";
+import { DeletePlanValuesController } from "@plan/deletePlanValues/DeletePlanValuesController";
 import { FindAllPlansOperatorController } from "@plan/findAllPlansOperator/FindAllPlansOperatorController";
 import { FindPlanController } from "@plan/findPlan/FindPlanController";
 import { UpdatePlanController } from "@plan/updatePlan/UpdatePlanController";
+import { UpdatePlanValuesController } from "@plan/updatePlanValues/UpdatePlanValuesController";
 
 // router creation with option to merge params from parent router
 const planRoutes = Router({ mergeParams: true });
@@ -27,6 +36,10 @@ const findAllPlansOperatorController = new FindAllPlansOperatorController();
 const findPlanController = new FindPlanController();
 const createPlanValuesController = new CreatePlanValuesController();
 const updatePlanController = new UpdatePlanController();
+const updatePlanValuesController = new UpdatePlanValuesController();
+const deletePlanValuesController = new DeletePlanValuesController();
+const deletePlanController = new DeletePlanController();
+const deleteAllPlansOperatorController = new DeleteAllPlansOperatorController();
 
 // routes
 /**
@@ -77,11 +90,61 @@ planRoutes.post(
 	createPlanValuesController.handle
 );
 
+/**
+ * @description Update a plan basic information
+ * @route PUT /:id_operator/plans/:id_plan
+ * @access Private
+ * @group Plan - Operations about plans
+ * @author Raphael Vaz
+ */
 planRoutes.put(
 	"/:id_plan",
 	planExistsId,
-	regexReach,
+	providedReachUpdate,
 	updatePlanController.handle
+);
+
+/**
+ * @description Update a plan values
+ * @route PUT /:id_operator/plans/:id_plan/values
+ * @access Private
+ * @group Plan - Operations about plans
+ * @author Raphael Vaz
+ */
+planRoutes.put(
+	"/:id_plan/values",
+	planExistsId,
+	planValuesExistsDeleteUpdate,
+	updatePlanValuesController.handle
+);
+
+/**
+ * @description Delete a plan
+ * @route DELETE /:id_operator/plans/:id_plan
+ * @access Private
+ * @group Plan - Operations about plans
+ * @author Raphael Vaz
+ */
+planRoutes.delete("/:id_plan", planExistsId, deletePlanController.handle);
+
+/**
+ * @description Delete a plan values
+ * @route DELETE /:id_operator/plans/:id_plan/values
+ * @access Private
+ * @group Plan - Operations about plans
+ * @author Raphael Vaz
+ */
+planRoutes.delete(
+	"/:id_plan/values",
+	planExistsId,
+	planValuesExistsDeleteUpdate,
+	deletePlanValuesController.handle
+);
+
+planRoutes.delete(
+	"/",
+	operatorPlansCheck,
+	deleteAllPlansOperatorController.handle
 );
 
 export { planRoutes };
