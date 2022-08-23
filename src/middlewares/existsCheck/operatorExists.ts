@@ -1,5 +1,5 @@
+import { prisma } from "@database/prismaClient";
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../../database/prismaClient";
 
 /**
  * @description This function is responsible for checking if the operator exists in the database by id

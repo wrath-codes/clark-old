@@ -3,13 +3,13 @@ import { Router } from "express";
 import multer from "multer";
 
 // middlewares imports
-import { getCnpjJaInfoOperator } from "@middlewares/consult/getCnpjJaInfoOperator";
+import { getCnpjJaInfo } from "@middlewares/consult/getCnpjJaInfo";
 import { getCnpjJaToken } from "@middlewares/consult/getCnpjJaToken";
 import { operatorAddressCheck } from "@middlewares/existsCheck/operatorAddressCheck";
 import { operatorContactCheck } from "@middlewares/existsCheck/operatorContactCheck";
 import {
 	operatorExistsCNPJ,
-	operatorExistsId,
+	operatorExistsId
 } from "@middlewares/existsCheck/operatorExists";
 import { operatorLoginCheck } from "@middlewares/existsCheck/operatorLoginCheck";
 import { operatorContactInUse } from "@middlewares/isInUse/contactInUse";
@@ -79,7 +79,7 @@ operatorRoutes.post(
 	regexCNPJ,
 	operatorExistsCNPJ,
 	getCnpjJaToken,
-	getCnpjJaInfoOperator,
+	getCnpjJaInfo,
 	createOperatorController.handle
 );
 

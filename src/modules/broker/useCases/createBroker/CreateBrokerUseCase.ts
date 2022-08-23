@@ -1,7 +1,7 @@
 import { prisma } from "@database/prismaClient";
 import { slugifyName } from "src/utils/slugfyName";
 
-interface ICreateOperator {
+interface ICreateBroker {
 	name: string;
 	cnpj: string;
 	address: {
@@ -13,26 +13,24 @@ interface ICreateOperator {
 		state: string;
 		zipCode: string;
 	};
-	website: string;
 }
 
 /**
- * @description UseCase responsible for creating an operator
+ * @description UseCase responsible for creating a broker
  * @author Raphael Vaz
  */
-export class CreateOperatorUseCase {
-	async execute({ name, cnpj, address, website }: ICreateOperator) {
-		const operator = await prisma.operators.create({
+export class CreateBrokerUseCase {
+	async execute({ name, cnpj, address }: ICreateBroker) {
+		const broker = await prisma.brokers.create({
 			data: {
 				name,
 				cnpj,
-				website,
 				slug: await slugifyName(name),
 			},
 		});
 
-		const operatorWithAdress = await prisma.operators.update({
-			where: { id: operator.id },
+		const brokerWithAdress = await prisma.brokers.update({
+			where: { id: broker.id },
 			data: {
 				address: {
 					create: {
@@ -50,6 +48,6 @@ export class CreateOperatorUseCase {
 			include: { address: true },
 		});
 
-		return operatorWithAdress;
+		return brokerWithAdress;
 	}
 }

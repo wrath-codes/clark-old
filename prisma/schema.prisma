@@ -117,41 +117,6 @@ enum PlanReach {
   NACIONAL
 }
 
-// EMPLOYERS MODEL
-model Employers {
-  id   String  @id @default(uuid())
-  name String
-  slug String?
-  cnpj String  @unique
-
-  address EmployerAddresses?
-
-  brokerId  String?
-  broker    Brokers?    @relation(fields: [brokerId], references: [id], onDelete: Cascade)
-  Contracts Contracts[]
-
-  @@map("employers")
-}
-
-model EmployerAddresses {
-  id           String  @id @default(uuid())
-  street       String
-  number       Int
-  complement   String?
-  neighborhood String
-  city         String
-  state        String
-  country      String
-  zipCode      String
-  latitude     Float?
-  longitude    Float?
-
-  employer   Employers? @relation(fields: [employerId], references: [id], onDelete: Cascade)
-  employerId String?    @unique
-
-  @@map("employerAddresses")
-}
-
 // BROKERS MODEL
 model Brokers {
   id   String  @id @default(uuid())
@@ -184,6 +149,41 @@ model BrokerAddresses {
   @@map("brokerAddresses")
 }
 
+// EMPLOYERS MODEL
+model Employers {
+  id   String  @id @default(uuid())
+  name String
+  slug String?
+  cnpj String  @unique
+
+  address EmployerAddresses?
+
+  brokerId  String?
+  broker    Brokers?    @relation(fields: [brokerId], references: [id])
+  Contracts Contracts[]
+
+  @@map("employers")
+}
+
+model EmployerAddresses {
+  id           String  @id @default(uuid())
+  street       String
+  number       Int
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  country      String
+  zipCode      String
+  latitude     Float?
+  longitude    Float?
+
+  employer   Employers? @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  employerId String?    @unique
+
+  @@map("employerAddresses")
+}
+
 // CONTRACTS MODEL
 model Contracts {
   id          String         @id @default(uuid())
@@ -195,10 +195,10 @@ model Contracts {
 
   employerId String?
   employer   Employers? @relation(fields: [employerId], references: [id], onDelete: Cascade)
-  operatorId String?
-  operator   Operators? @relation(fields: [operatorId], references: [id], onDelete: Cascade)
 
-  deals PlanDeals[]
+  operatorId String?
+  operator   Operators?  @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  PlanDeals  PlanDeals[]
 
   @@map("contracts")
 }
@@ -214,9 +214,10 @@ model PlanDeals {
   planId String
   plan   Plans? @relation(fields: [planId], references: [id], onDelete: Cascade)
 
-  values      PlanDealValues[]
-  Contracts   Contracts?       @relation(fields: [contractsId], references: [id])
-  contractsId String?
+  values PlanDealValues?
+
+  contractId String
+  contract   Contracts? @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@map("planDeals")
 }
@@ -235,32 +236,99 @@ model PlanDealValues {
   age_54_58    Float
   age_59_above Float
 
-  dealId String
+  dealId String     @unique
   deal   PlanDeals? @relation(fields: [dealId], references: [id], onDelete: Cascade)
 
   @@map("planDealValues")
 }
 
-// EMPLOYEES MODEL
-model Employees {
-  firstName     String
-  lastName      String
-  cpf           String        @unique
-  email         String        @unique
-  cellphone     String        @unique
-  dateBirth     DateTime
-  sex           Sex           @default(MASCULINO)
-  maritalStatus MaritalStatus @default(SOLTEIRO)
-}
+// // EMPLOYEES MODEL
+// model Employees {
+//   firstName     String
+//   lastName      String
+//   cpf           String        @unique
+//   email         String        @unique
+//   cellphone     String        @unique
+//   dateBirth     DateTime
+//   sex           Sex           @default(MASCULINO)
+//   maritalStatus MaritalStatus @default(SOLTEIRO)
 
-enum Sex {
-  MASCULINO
-  FEMININO
-}
+//   address             EmployeeAddresses? @relation(fields: [employeeAddressesId], references: [id])
+//   employeeAddressesId String?
 
-enum MaritalStatus {
-  SOLTEIRO
-  CASADO
-  DIVORCIADO
-  VIUVO
-}
+//   employerId String?
+//   employer   Employers? @relation(fields: [employerId], references: [id], onDelete: Cascade)
+
+//   planCard   PlanCards? @relation(fields: [planCardId], references: [id])
+//   planCardId String?
+
+//   dealId String?
+//   deal   PlanDeals? @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+//   titularId String?
+//   titular   Titulars? @relation(fields: [titularId], references: [id])
+
+//   @@map("employees")
+// }
+
+// model EmployeeAddresses {
+//   id           String  @id @default(uuid())
+//   street       String
+//   number       Int
+//   complement   String?
+//   neighborhood String
+//   city         String
+//   state        String
+//   country      String
+//   zipCode      String
+//   latitude     Float?
+//   longitude    Float?
+
+//   employees Employees[]
+
+//   @@map("employeeAddresses")
+// }
+
+// enum Sex {
+//   MASCULINO
+//   FEMININO
+// }
+
+// enum MaritalStatus {
+//   SOLTEIRO
+//   CASADO
+//   DIVORCIADO
+//   VIUVO
+// }
+
+// // PLANCARD MODEL
+// model PlanCards {
+//   id     String @id @default(uuid())
+//   number String @unique
+
+//   isActive        Boolean @default(true)
+//   isCoPay         Boolean @default(false)
+//   coPayPercentage Float   @default(10)
+
+//   kind      PlanCardKind @default(TITULAR)
+//   Employees Employees[]
+
+//   @@map("planCards")
+// }
+
+// enum PlanCardKind {
+//   TITULAR
+//   CONJUGUE
+//   FILHO_FILHA
+//   MAE_PAI
+// }
+
+// model Titulars {
+//   id String @id @default(uuid())
+
+//   cpf String @unique
+
+//   family Employees[]
+
+//   @@map("titulars")
+// }

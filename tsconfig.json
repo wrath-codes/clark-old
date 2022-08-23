@@ -1,35 +1,22 @@
 {
-  "compilerOptions": {
-    "sourceMap": true,
-    "outDir": "dist",
-    "strict": true,
-    "lib": [
-      "esnext"
-    ],
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "@database/*": [
-        "./src/database/*"
-      ],
-      "@routes/*": [
-        "./src/routes/*"
-      ],
-      "@middlewares/*": [
-        "./src/middlewares/*"
-      ],
-      "@user/*": [
-        "./src/modules/user/useCases/*"
-      ],
-      "@operator/*": [
-        "./src/modules/health/operator/useCases/*"
-      ],
-      "@plan/*": [
-        "./src/modules/health/plan/useCases/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-    }
-  }
+	"compilerOptions": {
+		"sourceMap": true,
+		"outDir": "dist",
+		"strict": true,
+		"lib": ["esnext"],
+		"esModuleInterop": true,
+		"baseUrl": ".",
+		"paths": {
+			"@database/*": ["./src/database/*"],
+			"@routes/*": ["./src/routes/*"],
+			"@middlewares/*": ["./src/middlewares/*"],
+			"@user/*": ["./src/modules/user/useCases/*"],
+			"@operator/*": ["./src/modules/health/operator/useCases/*"],
+			"@plan/*": ["./src/modules/health/plan/useCases/*"],
+			"@broker/*": ["./src/modules/broker/useCases/*"],
+			"@employer/*": ["./src/modules/health/employer/useCases/*"],
+			"@contract/*": ["./src/modules/health/contract/useCases/*"],
+			"@utils/*": ["./src/utils/*"]
+		}
+	}
 }

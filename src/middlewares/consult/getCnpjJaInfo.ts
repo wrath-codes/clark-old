@@ -26,7 +26,7 @@ interface CnpjInfoPayload {
  * @author Raphael Vaz
  */
 
-export const getCnpjJaInfoOperator = async (
+export const getCnpjJaInfo = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
@@ -58,7 +58,7 @@ export const getCnpjJaInfoOperator = async (
 							address: {
 								street: data.address.street,
 								number: Number(data.address.number),
-								complement: data.address.complement,
+								complement: data.address.details,
 								neighborhood: data.address.district,
 								city: data.address.city,
 								state: data.address.state,
