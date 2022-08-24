@@ -14,6 +14,7 @@ import { providedReachUpdate } from "./../../../middlewares/providedCheck/provid
 
 // import controllers
 import { operatorPlansCheck } from "@middlewares/existsCheck/operatorPlansCheck";
+import { ChangePlanCareController } from "@plan/changePlanCare/ChangePlanCareController";
 import { CreatePlanController } from "@plan/createPlan/CreatePlanController";
 import { DeleteAllPlansOperatorController } from "@plan/deleteAllPlansOperator/DeleteAllPlansOperatorController";
 import { DeletePlanController } from "@plan/deletePlan/DeletePlanController";
@@ -37,6 +38,7 @@ const updatePlanController = new UpdatePlanController();
 const deletePlanController = new DeletePlanController();
 const deleteAllPlansOperatorController = new DeleteAllPlansOperatorController();
 const importPlansController = new ImportPlansController();
+const changePlanCareController = new ChangePlanCareController();
 
 // routes
 /**
@@ -109,6 +111,19 @@ planRoutes.delete(
 	deleteAllPlansOperatorController.handle
 );
 
+/**
+ * @description Import plans from a file
+ * @route POST /:id_operator/plans/import
+ * @access Private
+ * @group Plan - Operations about plans
+ * @author Raphael Vaz
+ */
 planRoutes.post("/import", upload.single("file"), importPlansController.handle);
+
+planRoutes.patch(
+	"/:id_plan/changeCare",
+	planExistsId,
+	changePlanCareController.handle
+);
 
 export { planRoutes };

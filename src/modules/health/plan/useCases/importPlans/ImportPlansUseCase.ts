@@ -8,6 +8,9 @@ interface IImportPlans {
 	name: string;
 	ans_register: string;
 	reach: PlanReach;
+	obstetricsCare?: boolean;
+	outpatientCare?: boolean;
+	hospitalCare?: boolean;
 }
 
 export class ImportPlansUseCase {
@@ -23,12 +26,15 @@ export class ImportPlansUseCase {
 
 			parseFile
 				.on("data", async (line) => {
-					const [name, ans_register, reach] = line;
+					const [name, ans_register, reach, obstetricsCare, outpatientCare, hospitalCare] = line;
 
 					plans.push({
 						name,
 						ans_register,
 						reach,
+						obstetricsCare,
+						outpatientCare,
+						hospitalCare,
 					});
 				})
 				.on("end", () => {
@@ -47,12 +53,14 @@ export class ImportPlansUseCase {
 		const plans = await this.loadPlans(file);
 
 		plans.map(async (plan) => {
-			const { name, ans_register, reach } = plan;
+			const { name, ans_register, reach, obstetricsCare, outpatientCare, hospitalCare } = plan;
 
 			// check if the operator has a plan with the same ans_register
 			const planExists = await prisma.plans.findUnique({
 				where: { ans_register },
 			});
+
+			
 
 			if (!planExists) {
 				// create plan
@@ -62,6 +70,9 @@ export class ImportPlansUseCase {
 						ans_register,
 						reach,
 						slug: await slugifyName(name),
+						obstetricsCare: Boolean(obstetricsCare) ? Boolean(obstetricsCare) : false,
+						outpatientCare: Boolean(outpatientCare) ? Boolean(outpatientCare) : false,
+						hospitalCare: Boolean(hospitalCare) ? Boolean(hospitalCare) : false,
 						operator: {
 							connect: { id: id_operator },
 						},
@@ -75,6 +86,9 @@ export class ImportPlansUseCase {
 						ans_register,
 						reach,
 						slug: await slugifyName(name),
+						obstetricsCare: Boolean(obstetricsCare) ? Boolean(obstetricsCare) : false,
+						outpatientCare: Boolean(outpatientCare) ? Boolean(outpatientCare) : false,
+						hospitalCare: Boolean(hospitalCare) ? Boolean(hospitalCare) : false,
 						operator: {
 							connect: { id: id_operator },
 						},

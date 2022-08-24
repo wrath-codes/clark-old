@@ -3,7 +3,7 @@ import { CreatePlanUseCase } from "./CreatePlanUseCase";
 
 export class CreatePlanController {
 	async handle(request: Request, response: Response) {
-		const { name, reach, ans_register } = request.body;
+		const { name, reach, ans_register, obstetricsCare, outpatientCare, hospitalCare } = request.body;
 		const operatorId = request.params.id_operator;
 
 		const createPlanUseCase = new CreatePlanUseCase();
@@ -13,6 +13,9 @@ export class CreatePlanController {
 			reach,
 			ans_register,
 			operatorId,
+			obstetricsCare,
+			outpatientCare,
+			hospitalCare,
 		});
 
 		return response.status(201).json(plan);

@@ -2,6 +2,7 @@ declare namespace Express {
 	export interface Request {
 		id_user: string;
 		id_operator: string;
+		id_plan: string;
 		idToken: string;
 		ttl: number;
 		cnpj_info: {

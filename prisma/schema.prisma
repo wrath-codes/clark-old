@@ -102,6 +102,10 @@ model Plans {
   reach        PlanReach @default(GRUPO_ESTADOS)
   ans_register String    @unique
 
+  obstetricsCare Boolean @default(false)
+  outpatientCare Boolean @default(false)
+  hospitalCare   Boolean @default(false)
+
   operatorId String?
   operator   Operators?  @relation(fields: [operatorId], references: [id], onDelete: Cascade)
   PlanDeals  PlanDeals[]
@@ -217,9 +221,23 @@ model PlanDeals {
   values PlanDealValues?
 
   contractId String
-  contract   Contracts? @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  contract   Contracts?  @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  CoPayment  CoPayments?
 
   @@map("planDeals")
+}
+
+model CoPayments {
+  id                     String @id @default(uuid())
+  coPayPercentage        Float?
+  coPayValueExam         Float?
+  coPayValueConsultation Float?
+  coPayValueAdmission    Float?
+
+  planDealId String     @unique
+  planDeal   PlanDeals? @relation(fields: [planDealId], references: [id], onDelete: Cascade)
+
+  @@map("coPayments")
 }
 
 model PlanDealValues {
@@ -307,8 +325,6 @@ model PlanDealValues {
 //   number String @unique
 
 //   isActive        Boolean @default(true)
-//   isCoPay         Boolean @default(false)
-//   coPayPercentage Float   @default(10)
 
 //   kind      PlanCardKind @default(TITULAR)
 //   Employees Employees[]

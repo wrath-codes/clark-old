@@ -7,10 +7,14 @@ interface ICreatePlanUseCase {
 	reach: PlanReach;
 	ans_register: string;
 	operatorId: string;
+
+	obstetricsCare?: boolean;
+	outpatientCare?: boolean;
+	hospitalCare?: boolean;
 }
 
 export class CreatePlanUseCase {
-	async execute({ name, reach, ans_register, operatorId }: ICreatePlanUseCase) {
+	async execute({ name, reach, ans_register, operatorId, obstetricsCare, outpatientCare, hospitalCare }: ICreatePlanUseCase) {
 		const plan = await prisma.plans.create({
 			data: {
 				name,
@@ -18,6 +22,9 @@ export class CreatePlanUseCase {
 				reach,
 				ans_register,
 				operatorId,
+				obstetricsCare: obstetricsCare ? obstetricsCare : false,
+				outpatientCare: outpatientCare ? outpatientCare : false,
+				hospitalCare: hospitalCare ? hospitalCare : false,
 			},
 		});
 
