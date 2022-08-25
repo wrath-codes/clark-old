@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { FindBrokerUseCase } from "./FindBrokerUseCase";
 
+import { FindBrokerUseCase } from "./FindBrokerUseCase";
 
 export class FindBrokerController {
   async handle(request: Request, response: Response) {

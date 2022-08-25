@@ -8,22 +8,18 @@ import { NextFunction, Request, Response } from "express";
  * @returns {Promise<void>}
  * @author Raphael Vaz
  */
-export const brokerExistsId = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
-) => {
-	const { id_broker } = request.params;
+export const brokerExistsId = async (request: Request, response: Response, next: NextFunction) => {
+  const { id_broker } = request.params;
 
-	// check if broker with same id already exists
-	const brokerExists = await prisma.brokers.findFirst({
-		where: { id: id_broker },
-	});
-	if (!brokerExists) {
-		throw new Error("Broker does not exist!");
-	}
+  // check if broker with same id already exists
+  const brokerExists = await prisma.brokers.findFirst({
+    where: { id: id_broker },
+  });
+  if (!brokerExists) {
+    throw new Error("Broker does not exist!");
+  }
 
-	return next();
+  return next();
 };
 
 /**
@@ -34,19 +30,19 @@ export const brokerExistsId = async (
  * @author Raphael Vaz
  */
 export const brokerExistsCNPJ = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { cnpj } = request.body;
+  const { cnpj } = request.body;
 
-	// check if broker with same cnpj already exists
-	const brokerExists = await prisma.brokers.findFirst({
-		where: { cnpj },
-	});
-	if (brokerExists) {
-		throw new Error("Broker already exists!");
-	}
+  // check if broker with same cnpj already exists
+  const brokerExists = await prisma.brokers.findFirst({
+    where: { cnpj },
+  });
+  if (brokerExists) {
+    throw new Error("Broker already exists!");
+  }
 
-	return next();
+  return next();
 };

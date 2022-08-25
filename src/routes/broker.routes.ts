@@ -4,6 +4,7 @@ import { Router } from "express";
 import { getCnpjJaInfo } from "@middlewares/consult/getCnpjJaInfo";
 import { getCnpjJaToken } from "@middlewares/consult/getCnpjJaToken";
 import { brokerExistsCNPJ, brokerExistsId } from "@middlewares/existsCheck/brokerExists";
+import { providedCNPJ } from "@middlewares/providedCheck/providedCNPJ";
 import { regexCNPJ } from "@middlewares/regexCheck/regexCNPJ";
 
 // controllers imports
@@ -12,7 +13,6 @@ import { CreateBrokerController } from "@broker/createBroker/CreateBrokerControl
 import { DeleteBrokerController } from "@broker/deleteBroker/DeleteBrokerController";
 import { FindAllBrokersController } from "@broker/findAllBrokers/FindAllBrokersController";
 import { FindBrokerController } from "@broker/findBroker/FindBrokerController";
-import { providedCNPJ } from "@middlewares/providedCheck/providedCNPJ";
 
 // controller declarations
 const createBrokerController = new CreateBrokerController();
@@ -26,7 +26,6 @@ const brokerRoutes = Router();
 
 // routes
 
-
 /**
  * @route POST /brokers
  * @group Broker - Operations about brokers
@@ -35,7 +34,8 @@ const brokerRoutes = Router();
  * @returns {object} - broker created
  * @author Raphael Vaz
  */
-brokerRoutes.post("/",
+brokerRoutes.post(
+  "/",
   providedCNPJ,
   regexCNPJ,
   brokerExistsCNPJ,
@@ -44,15 +44,14 @@ brokerRoutes.post("/",
   createBrokerController.handle
 );
 
-  /**
-   * @route GET /brokers
-   * @group Broker - Operations about brokers
-   * @access Private
-   * @returns {object} - all brokers
-   * @author Raphael Vaz
-   */
+/**
+ * @route GET /brokers
+ * @group Broker - Operations about brokers
+ * @access Private
+ * @returns {object} - all brokers
+ * @author Raphael Vaz
+ */
 brokerRoutes.get("/", findAllBrokersController.handle);
-  
 
 /**
  * @route GET /brokers/:id_broker
@@ -61,10 +60,7 @@ brokerRoutes.get("/", findAllBrokersController.handle);
  * @returns {object} - broker found found
  * @author Raphael Vaz
  */
-brokerRoutes.get("/:id_broker",
-  brokerExistsId,
-  findBrokerController.handle
-);
+brokerRoutes.get("/:id_broker", brokerExistsId, findBrokerController.handle);
 
 /**
  * @route DELETE /brokers/:id_broker
@@ -73,10 +69,7 @@ brokerRoutes.get("/:id_broker",
  * @returns {object} - message of success
  * @author Raphael Vaz
  */
-brokerRoutes.delete("/:id_broker",
-  brokerExistsId,
-  deleteBrokerController.handle
-);
+brokerRoutes.delete("/:id_broker", brokerExistsId, deleteBrokerController.handle);
 
 /**
  * @route PUT /brokers/:id_broker
@@ -85,9 +78,6 @@ brokerRoutes.delete("/:id_broker",
  * @returns {object} - updated broker
  * @author Raphael Vaz
  */
-brokerRoutes.put("/:id_broker",
-  brokerExistsId,
-  changeBrokerNameController.handle
-);
+brokerRoutes.put("/:id_broker", brokerExistsId, changeBrokerNameController.handle);
 
 export { brokerRoutes };

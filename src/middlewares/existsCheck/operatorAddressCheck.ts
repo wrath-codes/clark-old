@@ -9,22 +9,22 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const operatorAddressCheck = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_operator } = request.params;
+  const { id_operator } = request.params;
 
-	// checks if this operator already has an address
-	const address = await prisma.operatorAddresses.findFirst({
-		where: {
-			operatorId: id_operator,
-		},
-	});
+  // checks if this operator already has an address
+  const address = await prisma.operatorAddresses.findFirst({
+    where: {
+      operatorId: id_operator,
+    },
+  });
 
-	if (address) {
-		throw new Error("This operator already has an address");
-	}
+  if (address) {
+    throw new Error("This operator already has an address");
+  }
 
-	return next();
+  return next();
 };

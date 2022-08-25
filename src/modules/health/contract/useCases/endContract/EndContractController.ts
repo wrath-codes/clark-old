@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
+
 import { EndContractUseCase } from "./EndContractUseCase";
-
-
 
 export class EndContractController {
   async handle(request: Request, response: Response) {

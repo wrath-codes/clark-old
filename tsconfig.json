@@ -1,22 +1,29 @@
 {
-	"compilerOptions": {
-		"sourceMap": true,
-		"outDir": "dist",
-		"strict": true,
-		"lib": ["esnext"],
-		"esModuleInterop": true,
-		"baseUrl": ".",
-		"paths": {
-			"@database/*": ["./src/database/*"],
-			"@routes/*": ["./src/routes/*"],
-			"@middlewares/*": ["./src/middlewares/*"],
-			"@user/*": ["./src/modules/user/useCases/*"],
-			"@operator/*": ["./src/modules/health/operator/useCases/*"],
-			"@plan/*": ["./src/modules/health/plan/useCases/*"],
-			"@broker/*": ["./src/modules/broker/useCases/*"],
-			"@employer/*": ["./src/modules/health/employer/useCases/*"],
-			"@contract/*": ["./src/modules/health/contract/useCases/*"],
-			"@utils/*": ["./src/utils/*"]
-		}
-	}
+  "compilerOptions": {
+    "target": "es2016",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@database/*": ["./src/database/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@user/*": ["./src/modules/user/useCases/*"],
+      "@operator/*": ["./src/modules/health/operator/useCases/*"],
+      "@plan/*": ["./src/modules/health/plan/useCases/*"],
+      "@broker/*": ["./src/modules/broker/useCases/*"],
+      "@employer/*": ["./src/modules/health/employer/useCases/*"],
+      "@contract/*": ["./src/modules/health/contract/useCases/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  }
 }

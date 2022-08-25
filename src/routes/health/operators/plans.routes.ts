@@ -1,19 +1,15 @@
-// import libraries
 import { Router } from "express";
 import multer from "multer";
 
 // import middlewares
-import {
-	planExistsAnsRegister,
-	planExistsId,
-} from "@middlewares/existsCheck/planExists";
+import { operatorPlansCheck } from "@middlewares/existsCheck/operatorPlansCheck";
+import { planExistsAnsRegister, planExistsId } from "@middlewares/existsCheck/planExists";
 import { providedPlan } from "@middlewares/providedCheck/providedPlan";
+import { providedReachUpdate } from "@middlewares/providedCheck/providedReachUpdate";
 import { regexAnsRegister } from "@middlewares/regexCheck/regexAnsRegister";
 import { regexReach } from "@middlewares/regexCheck/regexReach";
-import { providedReachUpdate } from "./../../../middlewares/providedCheck/providedReachUpdate";
 
 // import controllers
-import { operatorPlansCheck } from "@middlewares/existsCheck/operatorPlansCheck";
 import { ChangePlanCareController } from "@plan/changePlanCare/ChangePlanCareController";
 import { CreatePlanController } from "@plan/createPlan/CreatePlanController";
 import { DeleteAllPlansOperatorController } from "@plan/deleteAllPlansOperator/DeleteAllPlansOperatorController";
@@ -27,7 +23,7 @@ import { UpdatePlanController } from "@plan/updatePlan/UpdatePlanController";
 const planRoutes = Router({ mergeParams: true });
 // upload folder definition
 const upload = multer({
-	dest: "./tmp",
+  dest: "./tmp",
 });
 
 // controller creation
@@ -49,12 +45,12 @@ const changePlanCareController = new ChangePlanCareController();
  * @author Raphael Vaz
  */
 planRoutes.post(
-	"/",
-	providedPlan,
-	regexAnsRegister,
-	regexReach,
-	planExistsAnsRegister,
-	createPlanController.handle
+  "/",
+  providedPlan,
+  regexAnsRegister,
+  regexReach,
+  planExistsAnsRegister,
+  createPlanController.handle
 );
 
 /**
@@ -82,12 +78,7 @@ planRoutes.get("/:id_plan", planExistsId, findPlanController.handle);
  * @group Plan - Operations about plans
  * @author Raphael Vaz
  */
-planRoutes.put(
-	"/:id_plan",
-	planExistsId,
-	providedReachUpdate,
-	updatePlanController.handle
-);
+planRoutes.put("/:id_plan", planExistsId, providedReachUpdate, updatePlanController.handle);
 
 /**
  * @description Delete a plan
@@ -105,11 +96,7 @@ planRoutes.delete("/:id_plan", planExistsId, deletePlanController.handle);
  * @group Plan - Operations about plans
  * @author Raphael Vaz
  */
-planRoutes.delete(
-	"/",
-	operatorPlansCheck,
-	deleteAllPlansOperatorController.handle
-);
+planRoutes.delete("/", operatorPlansCheck, deleteAllPlansOperatorController.handle);
 
 /**
  * @description Import plans from a file
@@ -120,10 +107,13 @@ planRoutes.delete(
  */
 planRoutes.post("/import", upload.single("file"), importPlansController.handle);
 
-planRoutes.patch(
-	"/:id_plan/changeCare",
-	planExistsId,
-	changePlanCareController.handle
-);
+/**
+ * @description Change the care of a plan
+ * @route PUT /:id_operator/plans/:id_plan/changeCare
+ * @access Private
+ * @group Plan - Operations about plans
+ * @author Raphael Vaz
+ */
+planRoutes.patch("/:id_plan/changeCare", planExistsId, changePlanCareController.handle);
 
 export { planRoutes };

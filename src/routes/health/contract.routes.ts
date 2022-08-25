@@ -1,4 +1,4 @@
-// libraries imports";
+// libraries imports
 import { Router } from "express";
 
 // middlewares imports
@@ -6,7 +6,7 @@ import { contractExistsNumber, contractExixtsId } from "@middlewares/existsCheck
 import { employerExistsId } from "@middlewares/existsCheck/employerExist";
 import { operatorExistsId } from "@middlewares/existsCheck/operatorExists";
 import { contractCancelledOrExpiredCheck } from "@middlewares/miscellaneous/contractCancelledOrExpiredCheck";
-import { getPlanId } from '@middlewares/miscellaneous/getPlanId';
+import { getPlanId } from "@middlewares/miscellaneous/getPlanId";
 
 // controller imports
 import { CancelContractController } from "@contract/cancelContract/CancelContractContractController";
@@ -32,7 +32,7 @@ const createContractPlanDealController = new CreateContractPlanDealController();
 // extends contractRouter to be used by employerRouter
 const contractRoutes = Router({ mergeParams: true });
 
-//routes
+// routes
 /**
  * @route POST /:id_employer/contracts/:id_operator
  * @description Create a contract
@@ -40,7 +40,8 @@ const contractRoutes = Router({ mergeParams: true });
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.post("/:id_operator",
+contractRoutes.post(
+  "/:id_operator",
   employerExistsId,
   contractExistsNumber,
   operatorExistsId,
@@ -54,10 +55,7 @@ contractRoutes.post("/:id_operator",
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.get("/getAllContracts",
-  employerExistsId,
-  findAllContractsEmployerController.handle
-);
+contractRoutes.get("/getAllContracts", employerExistsId, findAllContractsEmployerController.handle);
 
 /**
  * @route GET /:id_employer/contracts/findContract/:id_contract
@@ -66,7 +64,8 @@ contractRoutes.get("/getAllContracts",
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.get("/findContract/:id_contract",
+contractRoutes.get(
+  "/findContract/:id_contract",
   employerExistsId,
   contractExixtsId,
   findContractController.handle
@@ -79,7 +78,8 @@ contractRoutes.get("/findContract/:id_contract",
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.put("/updateContractNumberDate/:id_contract",
+contractRoutes.put(
+  "/updateContractNumberDate/:id_contract",
   employerExistsId,
   contractExixtsId,
   updateContractNumberDateController.handle
@@ -92,7 +92,8 @@ contractRoutes.put("/updateContractNumberDate/:id_contract",
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.put("/endContract/:id_contract",
+contractRoutes.put(
+  "/endContract/:id_contract",
   employerExistsId,
   contractExixtsId,
   contractCancelledOrExpiredCheck,
@@ -106,7 +107,8 @@ contractRoutes.put("/endContract/:id_contract",
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.put("/cancelContract/:id_contract",
+contractRoutes.put(
+  "/cancelContract/:id_contract",
   employerExistsId,
   contractExixtsId,
   contractCancelledOrExpiredCheck,
@@ -120,16 +122,18 @@ contractRoutes.put("/cancelContract/:id_contract",
  * @access Private
  * @author Raphael Vaz
  */
-contractRoutes.delete("/deleteContract/:id_contract",
+contractRoutes.delete(
+  "/deleteContract/:id_contract",
   employerExistsId,
   contractExixtsId,
   deleteContractController.handle
 );
 
 /**
- * 
+ *
  */
-contractRoutes.post("/planDeal/:id_contract/createPlanDeal",
+contractRoutes.post(
+  "/planDeal/:id_contract/createPlanDeal",
   employerExistsId,
   contractExixtsId,
   getPlanId,

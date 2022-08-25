@@ -7,10 +7,7 @@ import { getCnpjJaInfo } from "@middlewares/consult/getCnpjJaInfo";
 import { getCnpjJaToken } from "@middlewares/consult/getCnpjJaToken";
 import { operatorAddressCheck } from "@middlewares/existsCheck/operatorAddressCheck";
 import { operatorContactCheck } from "@middlewares/existsCheck/operatorContactCheck";
-import {
-	operatorExistsCNPJ,
-	operatorExistsId
-} from "@middlewares/existsCheck/operatorExists";
+import { operatorExistsCNPJ, operatorExistsId } from "@middlewares/existsCheck/operatorExists";
 import { operatorLoginCheck } from "@middlewares/existsCheck/operatorLoginCheck";
 import { operatorContactInUse } from "@middlewares/isInUse/contactInUse";
 import { providedAdress } from "@middlewares/providedCheck/providedAddress";
@@ -26,6 +23,7 @@ import { regexZipCode } from "@middlewares/regexCheck/regexZipcode";
 // controller imports
 import { CreateOperatorController } from "@operator/createOperator/CreateOperatorController";
 import { CreateOperatorAddressController } from "@operator/createOperatorAdress/CreateOperatorAddressController";
+import { CreateOperatorContactController } from "@operator/createOperatorContact/CreateOperatorContactController";
 import { CreateOperatorLoginController } from "@operator/createOperatorLogin/CreateOperatorLoginControler";
 import { DeleteOperatorController } from "@operator/deleteOperator/deleteOperatorController";
 import { DeleteOperatorContactController } from "@operator/deleteOperatorContact/DeleteOperatorContactController";
@@ -36,7 +34,6 @@ import { ImportOperatorsController } from "@operator/importOperators/ImportOpera
 import { SearchOperatorOutsideController } from "@operator/searchOperatorOutside/SearchOperatorOutsideController";
 import { UpdateOperatorContactController } from "@operator/updateOperatorContact/UpdateOperatorContactController";
 import { UpdateOperatorLoginController } from "@operator/updateOperatorLogin/UpdateOperatorLoginController";
-import { CreateOperatorContactController } from "../../../modules/health/operator/useCases/createOperatorContact/CreateOperatorContactController";
 
 // import other routers
 import { planRoutes } from "./plans.routes";
@@ -61,7 +58,7 @@ const operatorRoutes = Router();
 operatorRoutes.use("/:id_operator/plans", planRoutes);
 // upload folder definition
 const upload = multer({
-	dest: "./tmp",
+  dest: "./tmp",
 });
 
 /**
@@ -73,14 +70,14 @@ const upload = multer({
  * @returns {object} - operator created
  */
 operatorRoutes.post(
-	"/",
-	providedOperator,
-	regexWebsite,
-	regexCNPJ,
-	operatorExistsCNPJ,
-	getCnpjJaToken,
-	getCnpjJaInfo,
-	createOperatorController.handle
+  "/",
+  providedOperator,
+  regexWebsite,
+  regexCNPJ,
+  operatorExistsCNPJ,
+  getCnpjJaToken,
+  getCnpjJaInfo,
+  createOperatorController.handle
 );
 
 /**
@@ -98,11 +95,11 @@ operatorRoutes.post(
  * @returns {object} - operator with address created
  */
 operatorRoutes.post(
-	"/createAddress/:id_operator",
-	providedAdress,
-	regexZipCode,
-	operatorAddressCheck,
-	createOperatorAddressController.handle
+  "/createAddress/:id_operator",
+  providedAdress,
+  regexZipCode,
+  operatorAddressCheck,
+  createOperatorAddressController.handle
 );
 
 /**
@@ -117,14 +114,14 @@ operatorRoutes.post(
  * @returns {object} - operator with contact created
  */
 operatorRoutes.post(
-	"/createContact/:id_operator",
-	providedContact,
-	regexEmail,
-	regexCellphone,
-	operatorContactInUse,
-	operatorContactCheck,
-	operatorExistsId,
-	createOperatorContactController.handle
+  "/createContact/:id_operator",
+  providedContact,
+  regexEmail,
+  regexCellphone,
+  operatorContactInUse,
+  operatorContactCheck,
+  operatorExistsId,
+  createOperatorContactController.handle
 );
 
 /**
@@ -137,18 +134,18 @@ operatorRoutes.post(
  * @returns {object} - operator with login created
  */
 operatorRoutes.post(
-	"/createLogin/:id_operator",
-	providedLogin,
-	operatorLoginCheck,
-	operatorExistsId,
-	createOperatorLoginController.handle
+  "/createLogin/:id_operator",
+  providedLogin,
+  operatorLoginCheck,
+  operatorExistsId,
+  createOperatorLoginController.handle
 );
 
 operatorRoutes.post(
-	"/import",
-	getCnpjJaToken,
-	upload.single("file"),
-	importOperatorsController.handle
+  "/import",
+  getCnpjJaToken,
+  upload.single("file"),
+  importOperatorsController.handle
 );
 
 /**
@@ -158,11 +155,7 @@ operatorRoutes.post(
  * @params id_operator: string - id of the operator
  * @returns {object} - operator found
  */
-operatorRoutes.get(
-	"/:id_operator",
-	operatorExistsId,
-	findOperatorController.handle
-);
+operatorRoutes.get("/:id_operator", operatorExistsId, findOperatorController.handle);
 
 /**
  * @router GET /operators
@@ -182,9 +175,9 @@ operatorRoutes.get("/", findAllOperatorsController.handle);
  * @returns {object} - operator with login updated
  */
 operatorRoutes.put(
-	"/updateLogin/:id_operator",
-	operatorExistsId,
-	updateOperatorLoginController.handle
+  "/updateLogin/:id_operator",
+  operatorExistsId,
+  updateOperatorLoginController.handle
 );
 
 /**
@@ -199,9 +192,9 @@ operatorRoutes.put(
  * @returns {object} - operator with contact updated
  */
 operatorRoutes.put(
-	"/updateContact/:id_operator",
-	operatorExistsId,
-	updateOperatorContactController.handle
+  "/updateContact/:id_operator",
+  operatorExistsId,
+  updateOperatorContactController.handle
 );
 
 /**
@@ -211,11 +204,7 @@ operatorRoutes.put(
  * @params id_operator: string - id of the operator
  * @returns message: string - operator deleted successfully
  */
-operatorRoutes.delete(
-	"/:id_operator",
-	operatorExistsId,
-	deleteOperatorController.handle
-);
+operatorRoutes.delete("/:id_operator", operatorExistsId, deleteOperatorController.handle);
 
 /**
  * @router DELETE /operators/deleteContact/:id_operator
@@ -225,9 +214,9 @@ operatorRoutes.delete(
  * @returns message: string - operator with contact deleted successfully
  */
 operatorRoutes.delete(
-	"/deleteContact/:id_operator",
-	operatorExistsId,
-	deleteOperatorContactController.handle
+  "/deleteContact/:id_operator",
+  operatorExistsId,
+  deleteOperatorContactController.handle
 );
 
 /**
@@ -238,15 +227,15 @@ operatorRoutes.delete(
  * @returns message: string - operator with login deleted successfully
  */
 operatorRoutes.delete(
-	"/deleteLogin/:id_operator",
-	operatorExistsId,
-	deleteOperatorLoginController.handle
+  "/deleteLogin/:id_operator",
+  operatorExistsId,
+  deleteOperatorLoginController.handle
 );
 
 operatorRoutes.get(
-	"/getOutside/:cnpj_operator",
-	getCnpjJaToken,
-	searchOperatorOutsideController.handle
+  "/getOutside/:cnpj_operator",
+  getCnpjJaToken,
+  searchOperatorOutsideController.handle
 );
 
 export { operatorRoutes };

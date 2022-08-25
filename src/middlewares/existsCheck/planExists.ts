@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+
 import { prisma } from "../../database/prismaClient";
 
 /**
@@ -8,22 +9,18 @@ import { prisma } from "../../database/prismaClient";
  * @returns {Promise<void>}
  * @author Raphael Vaz
  */
-export const planExistsId = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
-) => {
-	const { id_plan } = request.params;
+export const planExistsId = async (request: Request, response: Response, next: NextFunction) => {
+  const { id_plan } = request.params;
 
-	// check if plan with same id already exists
-	const planExists = await prisma.plans.findFirst({
-		where: { id: id_plan },
-	});
-	if (!planExists) {
-		throw new Error("Plan does not exist!");
-	}
+  // check if plan with same id already exists
+  const planExists = await prisma.plans.findFirst({
+    where: { id: id_plan },
+  });
+  if (!planExists) {
+    throw new Error("Plan does not exist!");
+  }
 
-	return next();
+  return next();
 };
 
 /**
@@ -34,19 +31,19 @@ export const planExistsId = async (
  * @author Raphael Vaz
  */
 export const planExistsAnsRegister = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { ans_register } = request.body;
+  const { ans_register } = request.body;
 
-	// check if plan with same ans_register already exists
-	const planExists = await prisma.plans.findFirst({
-		where: { ans_register },
-	});
-	if (planExists) {
-		throw new Error("Plan already exists!");
-	}
+  // check if plan with same ans_register already exists
+  const planExists = await prisma.plans.findFirst({
+    where: { ans_register },
+  });
+  if (planExists) {
+    throw new Error("Plan already exists!");
+  }
 
-	return next();
+  return next();
 };

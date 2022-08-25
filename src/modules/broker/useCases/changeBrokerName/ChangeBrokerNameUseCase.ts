@@ -1,6 +1,6 @@
 import { prisma } from "@database/prismaClient";
-import { slugifyName } from "@utils/slugfyName";
 
+import { slugifyName } from "@utils/slugfyName";
 
 export class ChangeBrokerNameUseCase {
   async execute(id_broker: string, name: string) {

@@ -9,21 +9,21 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const regexAnsRegister = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { ans_register } = request.body;
+  const { ans_register } = request.body;
 
-	// passes if not provided provided
-	if (!ans_register) {
-		return next();
-	}
+  // passes if not provided provided
+  if (!ans_register) {
+    return next();
+  }
 
-	if (!/^\d{9}$/.test(ans_register)) {
-		throw new Error("ANS Register is not valid!");
-	}
+  if (!/^\d{9}$/.test(ans_register)) {
+    throw new Error("ANS Register is not valid!");
+  }
 
-	return next();
+  return next();
 };
 /** ------------------------------------------------------------------------------ */

@@ -1,10 +1,7 @@
 import { Router } from "express";
 
 // middlewares
-import {
-	userExistsEmail,
-	userExistsId,
-} from "@middlewares/existsCheck/userExists";
+import { userExistsEmail, userExistsId } from "@middlewares/existsCheck/userExists";
 import { passwordCheck } from "@middlewares/passwordCheck";
 import { providedUser } from "@middlewares/providedCheck/providedUser";
 import { regexEmail } from "@middlewares/regexCheck/regexEmail";
@@ -39,12 +36,12 @@ const turnUserRegularController = new TurnUserRegularController();
  * @returns {object} user
  */
 userRoutes.post(
-	"/",
-	providedUser,
-	regexEmail,
-	passwordCheck,
-	userExistsEmail,
-	createUserController.handle
+  "/",
+  providedUser,
+  regexEmail,
+  passwordCheck,
+  userExistsEmail,
+  createUserController.handle
 );
 
 /**
@@ -77,12 +74,7 @@ userRoutes.delete("/:id_user", userExistsId, deleteUserController.handle);
  * @access Public
  * @returns {object} user
  */
-userRoutes.put(
-	"/:id_user",
-	regexEmail,
-	userExistsId,
-	updateUserInfoController.handle
-);
+userRoutes.put("/:id_user", regexEmail, userExistsId, updateUserInfoController.handle);
 
 /**
  * @route PATCH /api/user/turnAdmin/:id_user
@@ -90,11 +82,7 @@ userRoutes.put(
  * @access Public
  * @returns {object} user
  */
-userRoutes.patch(
-	"/turnAdmin/:id_user",
-	userExistsId,
-	turnUserAdminController.handle
-);
+userRoutes.patch("/turnAdmin/:id_user", userExistsId, turnUserAdminController.handle);
 
 /**
  * @route PATCH /api/user/turnRegular/:id_user
@@ -102,11 +90,7 @@ userRoutes.patch(
  * @access Public
  * @returns {object} user
  */
-userRoutes.patch(
-	"/turnRegular/:id_user",
-	userExistsId,
-	turnUserRegularController.handle
-);
+userRoutes.patch("/turnRegular/:id_user", userExistsId, turnUserRegularController.handle);
 
 /** ------------------------------------------------------------------------------ */
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AssignBrokerToEmployerUseCase } from "./AssignBrokerToEmployerUseCase";
 
+import { AssignBrokerToEmployerUseCase } from "./AssignBrokerToEmployerUseCase";
 
 export class AssignBrokerToEmployerController {
   async handle(request: Request, response: Response) {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { FindAllEmployersUseCase } from "./FindAllEmployersUseCase";
 
+import { FindAllEmployersUseCase } from "./FindAllEmployersUseCase";
 
 export class FindAllEmployersController {
   async handle(request: Request, response: Response) {

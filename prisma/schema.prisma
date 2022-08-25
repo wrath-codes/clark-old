@@ -218,7 +218,8 @@ model PlanDeals {
   planId String
   plan   Plans? @relation(fields: [planId], references: [id], onDelete: Cascade)
 
-  values PlanDealValues?
+  valuesId String?         @unique
+  values   PlanDealValues? @relation(fields: [valuesId], references: [id], onDelete: Cascade)
 
   contractId String
   contract   Contracts?  @relation(fields: [contractId], references: [id], onDelete: Cascade)
@@ -254,8 +255,7 @@ model PlanDealValues {
   age_54_58    Float
   age_59_above Float
 
-  dealId String     @unique
-  deal   PlanDeals? @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  PlanDeals PlanDeals?
 
   @@map("planDealValues")
 }

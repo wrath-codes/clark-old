@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
+
 import { CreateContractUseCase } from "./CreateContractUseCase";
-
-
 
 export class CreateContractController {
   async handle(request: Request, response: Response) {

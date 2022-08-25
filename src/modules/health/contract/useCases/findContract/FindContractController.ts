@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { FindContractUseCase } from "./FindContractUseCase";
 
+import { FindContractUseCase } from "./FindContractUseCase";
 
 export class FindContractController {
   async handle(request: Request, response: Response) {

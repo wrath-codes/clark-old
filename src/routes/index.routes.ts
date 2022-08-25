@@ -6,7 +6,7 @@ import { userRoutes } from "@routes/user.routes";
 
 const routes = Router();
 
-//routes
+// routes
 routes.use("/users", userRoutes);
 routes.use("/health", healthRoutes);
 routes.use("/brokers", brokerRoutes);

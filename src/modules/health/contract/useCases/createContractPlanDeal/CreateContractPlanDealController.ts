@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
+
 import { CreateContractPlanDealUseCase } from "./CreateContractPlanDealUseCase";
-
-
 
 export class CreateContractPlanDealController {
   async handle(request: Request, response: Response) {
@@ -17,7 +16,7 @@ export class CreateContractPlanDealController {
       age_44_48,
       age_49_53,
       age_54_58,
-      age_59_above
+      age_59_above,
     } = request.body;
 
     const createContractPlanDealUseCase = new CreateContractPlanDealUseCase();
@@ -33,10 +32,9 @@ export class CreateContractPlanDealController {
       age_44_48,
       age_49_53,
       age_54_58,
-      age_59_above
+      age_59_above,
     });
 
     return response.status(201).json(planDeal);
-
   }
 }

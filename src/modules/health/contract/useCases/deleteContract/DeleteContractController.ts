@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { DeleteContractUseCase } from "./DeleteContractUseCase";
 
+import { DeleteContractUseCase } from "./DeleteContractUseCase";
 
 export class DeleteContractController {
   async handle(request: Request, response: Response) {

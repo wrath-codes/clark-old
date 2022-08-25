@@ -8,19 +8,19 @@ import { CreateOperatorUseCase } from "@operator/createOperator/CreateOperatorUs
  * @ author Raphael Vaz
  */
 export class CreateOperatorController {
-	async handle(request: Request, response: Response) {
-		const { name, cnpj, address } = request.cnpj_info;
-		const { website } = request.body;
+  async handle(request: Request, response: Response) {
+    const { name, cnpj, address } = request.cnpj_info;
+    const { website } = request.body;
 
-		const createOperatorUseCase = new CreateOperatorUseCase();
+    const createOperatorUseCase = new CreateOperatorUseCase();
 
-		const operator = await createOperatorUseCase.execute({
-			name,
-			cnpj,
-			address,
-			website,
-		});
+    const operator = await createOperatorUseCase.execute({
+      name,
+      cnpj,
+      address,
+      website,
+    });
 
-		return response.status(201).json(operator);
-	}
+    return response.status(201).json(operator);
+  }
 }

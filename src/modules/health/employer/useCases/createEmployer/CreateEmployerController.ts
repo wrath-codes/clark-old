@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { CreateEmployerUseCase } from "./CreateEmployerUseCase";
 
+import { CreateEmployerUseCase } from "./CreateEmployerUseCase";
 
 export class CreateEmployerController {
   async handle(request: Request, response: Response) {

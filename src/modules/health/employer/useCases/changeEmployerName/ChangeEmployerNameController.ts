@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import { ChangeEmployerNameUseCase } from "./ChangeEmployerNameUseCase";
 
 export class ChangeEmployerNameController {

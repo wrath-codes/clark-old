@@ -1,18 +1,18 @@
 import { prisma } from "@database/prismaClient";
-import { slugifyName } from "@utils/slugfyName";
 
+import { slugifyName } from "@utils/slugfyName";
 
 interface ICreateEmployer {
   name: string;
-	cnpj: string;
-	address: {
-		street: string;
-		number: number;
-		complement?: string;
-		neighborhood: string;
-		city: string;
-		state: string;
-		zipCode: string;
+  cnpj: string;
+  address: {
+    street: string;
+    number: number;
+    complement?: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+    zipCode: string;
   };
 }
 

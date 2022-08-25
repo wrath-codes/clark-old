@@ -9,21 +9,21 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const operatorLoginCheck = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_operator } = request.params;
+  const { id_operator } = request.params;
 
-	// checks if this operator already has an Login
-	const login = await prisma.logins.findFirst({
-		where: {
-			operatorId: id_operator,
-		},
-	});
-	if (login) {
-		throw new Error("This operator already has a login");
-	}
+  // checks if this operator already has an Login
+  const login = await prisma.logins.findFirst({
+    where: {
+      operatorId: id_operator,
+    },
+  });
+  if (login) {
+    throw new Error("This operator already has a login");
+  }
 
-	return next();
+  return next();
 };

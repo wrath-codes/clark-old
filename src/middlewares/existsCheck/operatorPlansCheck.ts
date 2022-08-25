@@ -9,20 +9,20 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const operatorPlansCheck = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_operator } = request.params;
+  const { id_operator } = request.params;
 
-	// checks if this operator has any plans
-	const plans = await prisma.plans.findMany({
-		where: { operatorId: id_operator },
-	});
+  // checks if this operator has any plans
+  const plans = await prisma.plans.findMany({
+    where: { operatorId: id_operator },
+  });
 
-	if (plans.length === 0) {
-		throw new Error("This operator doesn't have any plans");
-	}
+  if (plans.length === 0) {
+    throw new Error("This operator doesn't have any plans");
+  }
 
-	return next();
+  return next();
 };

@@ -9,21 +9,21 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const operatorContactInUse = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { email } = request.body;
+  const { email } = request.body;
 
-	// checks if this operator already has an address
-	const emailInUse = await prisma.operatorContacts.findFirst({
-		where: {
-			email: email,
-		},
-	});
-	if (emailInUse) {
-		throw new Error("This email is already in use");
-	}
+  // checks if this operator already has an address
+  const emailInUse = await prisma.operatorContacts.findFirst({
+    where: {
+      email,
+    },
+  });
+  if (emailInUse) {
+    throw new Error("This email is already in use");
+  }
 
-	return next();
+  return next();
 };

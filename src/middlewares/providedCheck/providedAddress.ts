@@ -8,21 +8,17 @@ import { NextFunction, Request, Response } from "express";
  * @throws {object} - error message
  * @author Raphael Vaz
  */
-export const providedAdress = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
-) => {
-	const { number, zipCode } = request.body;
+export const providedAdress = async (request: Request, response: Response, next: NextFunction) => {
+  const { number, zipCode } = request.body;
 
-	// checks if a number was provided
-	if (!number) {
-		throw new Error("Number is required");
-	}
-	// checks if a zipCode was provided
-	if (!zipCode) {
-		throw new Error("ZipCode is required");
-	}
+  // checks if a number was provided
+  if (!number) {
+    throw new Error("Number is required");
+  }
+  // checks if a zipCode was provided
+  if (!zipCode) {
+    throw new Error("ZipCode is required");
+  }
 
-	return next();
+  return next();
 };

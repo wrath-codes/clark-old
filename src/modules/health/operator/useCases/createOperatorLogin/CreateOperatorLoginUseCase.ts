@@ -1,9 +1,9 @@
 import { prisma } from "@database/prismaClient";
 
 interface ICreateOperatorLogin {
-	id_operator: string;
-	username: string;
-	password: string;
+  id_operator: string;
+  username: string;
+  password: string;
 }
 
 /**
@@ -14,21 +14,21 @@ interface ICreateOperatorLogin {
  * @returns {object} - operator with the login created
  */
 export class CreateOperatorLoginUseCase {
-	async execute({ id_operator, username, password }: ICreateOperatorLogin) {
-		// creates an login for the operator with the provided id
-		const operatorWithLogin = await prisma.operators.update({
-			where: { id: id_operator },
-			data: {
-				login: {
-					create: {
-						username,
-						password,
-					},
-				},
-			},
-			include: { login: true },
-		});
+  async execute({ id_operator, username, password }: ICreateOperatorLogin) {
+    // creates an login for the operator with the provided id
+    const operatorWithLogin = await prisma.operators.update({
+      where: { id: id_operator },
+      data: {
+        login: {
+          create: {
+            username,
+            password,
+          },
+        },
+      },
+      include: { login: true },
+    });
 
-		return operatorWithLogin;
-	}
+    return operatorWithLogin;
+  }
 }

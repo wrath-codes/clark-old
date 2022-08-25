@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import { ChangeBrokerNameUseCase } from "./ChangeBrokerNameUseCase";
 
 export class ChangeBrokerNameController {
@@ -8,12 +9,8 @@ export class ChangeBrokerNameController {
 
     const changeBrokerNameUseCase = new ChangeBrokerNameUseCase();
 
-    const brokerWithDifferentName = await changeBrokerNameUseCase.execute(
-      id_broker,
-      name
-    );
+    const brokerWithDifferentName = await changeBrokerNameUseCase.execute(id_broker, name);
 
     return response.json(brokerWithDifferentName);
   }
 }
-

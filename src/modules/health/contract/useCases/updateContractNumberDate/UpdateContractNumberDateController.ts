@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
+
 import { UpdateContractNumberDateUseCase } from "./UpdateContractNumberDateUseCase";
-
-
 
 export class UpdateContractNumberDateController {
   async handle(request: Request, response: Response) {

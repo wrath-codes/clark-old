@@ -1,11 +1,7 @@
 import { prisma } from "@database/prismaClient";
 import { NextFunction, Request, Response } from "express";
 
-
-
-
-
-export const contractExixtsId = async(
+export const contractExixtsId = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -21,15 +17,15 @@ export const contractExixtsId = async(
   }
 
   return next();
-}
+};
 
-export const contractExistsNumber = async(
+export const contractExistsNumber = async (
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
   const { number } = request.body;
-  
+
   // check if operator with same cnpj already exists
   const contractExists = await prisma.contracts.findFirst({
     where: { number },
@@ -39,6 +35,4 @@ export const contractExistsNumber = async(
   }
 
   return next();
-}
-
-
+};

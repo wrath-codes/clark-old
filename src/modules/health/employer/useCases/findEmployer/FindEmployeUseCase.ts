@@ -1,7 +1,5 @@
 import { prisma } from "@database/prismaClient";
 
-
-
 export class FindEmployerUseCase {
   async execute(id_employer: string) {
     const employer = await prisma.employers.findFirst({
@@ -13,7 +11,7 @@ export class FindEmployerUseCase {
         broker: true,
       },
     });
-    
+
     return employer;
   }
 }

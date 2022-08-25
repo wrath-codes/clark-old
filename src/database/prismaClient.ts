@@ -3,16 +3,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 prisma.$use(async (params, next) => {
-  const before = Date.now()
+  const before = Date.now();
 
-  const result = await next(params)
+  const result = await next(params);
 
-  const after = Date.now()
+  const after = Date.now();
 
-  console.log(`Query ${params.model}.${params.action} took ${after - before}ms`)
+  console.log(`Query ${params.model}.${params.action} took ${after - before}ms`);
 
-  return result
-})
-
+  return result;
+});
 
 export { prisma };

@@ -4,12 +4,10 @@ import { Router } from "express";
 // middlewares imports
 import { getCnpjJaInfo } from "@middlewares/consult/getCnpjJaInfo";
 import { getCnpjJaToken } from "@middlewares/consult/getCnpjJaToken";
+import { brokerExistsId } from "@middlewares/existsCheck/brokerExists";
 import { employerExistsCNPJ, employerExistsId } from "@middlewares/existsCheck/employerExist";
 import { providedCNPJ } from "@middlewares/providedCheck/providedCNPJ";
 import { regexCNPJ } from "@middlewares/regexCheck/regexCNPJ";
-
-// import routers
-import { contractRoutes } from "./contract.routes";
 
 // controller imports
 import { AssignBrokerToEmployerController } from "@employer/assignBrokerToEmployer/AssignBrokerToEmployerController";
@@ -18,7 +16,8 @@ import { CreateEmployerController } from "@employer/createEmployer/CreateEmploye
 import { DeleteEmployerController } from "@employer/deleteEmployer/DeleteEmployerController";
 import { FindAllEmployersController } from "@employer/findAllEmployers/FindAllEmployersController";
 import { FindEmployerController } from "@employer/findEmployer/FindEmployerController";
-import { brokerExistsId } from "@middlewares/existsCheck/brokerExists";
+
+import { contractRoutes } from "./contract.routes";
 
 // controller declarations
 const createEmployerController = new CreateEmployerController();
@@ -31,7 +30,7 @@ const assignBrokerToEmployerController = new AssignBrokerToEmployerController();
 // router definition
 const employerRoutes = Router();
 employerRoutes.use("/:id_employer/contracts", contractRoutes);
-//routes
+// routes
 /**
  * @route POST /employer
  * @description Create an employer
@@ -39,7 +38,8 @@ employerRoutes.use("/:id_employer/contracts", contractRoutes);
  * @access Private
  * @author Raphael Vaz
  */
-employerRoutes.post("/",
+employerRoutes.post(
+  "/",
   providedCNPJ,
   regexCNPJ,
   employerExistsCNPJ,
@@ -55,7 +55,7 @@ employerRoutes.post("/",
  * @access Private
  * @author Raphael Vaz
  */
-employerRoutes.get("/", findAllEmployersController.handle);  
+employerRoutes.get("/", findAllEmployersController.handle);
 
 /**
  * @route GET /employers/:id_employer
@@ -64,11 +64,7 @@ employerRoutes.get("/", findAllEmployersController.handle);
  * @access Private
  * @author Raphael Vaz
  */
-employerRoutes.get("/:id_employer",
-  employerExistsId,
-  findEmployerController.handle
-);
-
+employerRoutes.get("/:id_employer", employerExistsId, findEmployerController.handle);
 
 /**
  * @route DELETE /employers/:id_employer
@@ -77,10 +73,7 @@ employerRoutes.get("/:id_employer",
  * @access Private
  * @author Raphael Vaz
  */
-employerRoutes.delete("/:id_employer",
-  employerExistsId,
-  deleteEmployerController.handle
-);
+employerRoutes.delete("/:id_employer", employerExistsId, deleteEmployerController.handle);
 
 /**
  * @route PUT /employers/:id_employer
@@ -89,12 +82,10 @@ employerRoutes.delete("/:id_employer",
  * @access Private
  * @author Raphael Vaz
  */
-employerRoutes.put("/:id_employer",
-  employerExistsId,
-  changeEmployerNameController.handle
-);
+employerRoutes.put("/:id_employer", employerExistsId, changeEmployerNameController.handle);
 
-employerRoutes.put("/:id_employer/assignBroker/:id_broker",
+employerRoutes.put(
+  "/:id_employer/assignBroker/:id_broker",
   employerExistsId,
   brokerExistsId,
   assignBrokerToEmployerController.handle

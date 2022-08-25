@@ -10,25 +10,21 @@ import { NextFunction, Request, Response } from "express";
  * @throws {object} - error message
  * @author Raphael Vaz
  */
-export const providedContact = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
-) => {
-	const { firstName, lastName, email, cellphone } = request.body;
+export const providedContact = async (request: Request, response: Response, next: NextFunction) => {
+  const { firstName, lastName, email, cellphone } = request.body;
 
-	if (!firstName) {
-		throw new Error("First name is required");
-	}
-	if (!lastName) {
-		throw new Error("Last name is required");
-	}
-	if (!email) {
-		throw new Error("Email is required");
-	}
-	if (!cellphone) {
-		throw new Error("Cellphone is required");
-	}
+  if (!firstName) {
+    throw new Error("First name is required");
+  }
+  if (!lastName) {
+    throw new Error("Last name is required");
+  }
+  if (!email) {
+    throw new Error("Email is required");
+  }
+  if (!cellphone) {
+    throw new Error("Cellphone is required");
+  }
 
-	return next();
+  return next();
 };

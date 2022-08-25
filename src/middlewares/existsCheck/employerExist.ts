@@ -9,21 +9,21 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const employerExistsId = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_employer } = request.params;
+  const { id_employer } = request.params;
 
-	// check if employer with same id already exists
-	const employerExists = await prisma.employers.findFirst({
-		where: { id: id_employer },
-	});
-	if (!employerExists) {
-		throw new Error("Employer does not exist!");
-	}
+  // check if employer with same id already exists
+  const employerExists = await prisma.employers.findFirst({
+    where: { id: id_employer },
+  });
+  if (!employerExists) {
+    throw new Error("Employer does not exist!");
+  }
 
-	return next();
+  return next();
 };
 
 /**
@@ -34,19 +34,19 @@ export const employerExistsId = async (
  * @author Raphael Vaz
  */
 export const employerExistsCNPJ = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { cnpj } = request.body;
+  const { cnpj } = request.body;
 
-	// check if employer with same cnpj already exists
-	const employerExists = await prisma.employers.findFirst({
-		where: { cnpj },
-	});
-	if (employerExists) {
-		throw new Error("Employer already exists!");
-	}
+  // check if employer with same cnpj already exists
+  const employerExists = await prisma.employers.findFirst({
+    where: { cnpj },
+  });
+  if (employerExists) {
+    throw new Error("Employer already exists!");
+  }
 
-	return next();
+  return next();
 };

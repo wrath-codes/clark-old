@@ -9,21 +9,21 @@ import { NextFunction, Request, Response } from "express";
  * @author Raphael Vaz
  */
 export const operatorExistsId = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_operator } = request.params;
+  const { id_operator } = request.params;
 
-	// check if operator with same id already exists
-	const operatorExists = await prisma.operators.findFirst({
-		where: { id: id_operator },
-	});
-	if (!operatorExists) {
-		throw new Error("Operator does not exist!");
-	}
+  // check if operator with same id already exists
+  const operatorExists = await prisma.operators.findFirst({
+    where: { id: id_operator },
+  });
+  if (!operatorExists) {
+    throw new Error("Operator does not exist!");
+  }
 
-	return next();
+  return next();
 };
 
 /**
@@ -34,19 +34,19 @@ export const operatorExistsId = async (
  * @author Raphael Vaz
  */
 export const operatorExistsCNPJ = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { cnpj } = request.body;
+  const { cnpj } = request.body;
 
-	// check if operator with same cnpj already exists
-	const operatorExists = await prisma.operators.findFirst({
-		where: { cnpj },
-	});
-	if (operatorExists) {
-		throw new Error("Operator already exists!");
-	}
+  // check if operator with same cnpj already exists
+  const operatorExists = await prisma.operators.findFirst({
+    where: { cnpj },
+  });
+  if (operatorExists) {
+    throw new Error("Operator already exists!");
+  }
 
-	return next();
+  return next();
 };

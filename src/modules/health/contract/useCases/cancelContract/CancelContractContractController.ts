@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
+
 import { CancelContractUseCase } from "./CancelContractUseCase";
-
-
-
-
 
 export class CancelContractController {
   async handle(request: Request, response: Response) {

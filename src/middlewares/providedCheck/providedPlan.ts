@@ -9,25 +9,21 @@ import { NextFunction, Request, Response } from "express";
  * @throws {object} - error message
  * @author Raphael Vaz
  */
-export const providedPlan = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
-) => {
-	const { name, ans_register, reach } = request.body;
+export const providedPlan = async (request: Request, response: Response, next: NextFunction) => {
+  const { name, ans_register, reach } = request.body;
 
-	// checks if a name was provided
-	if (!name) {
-		throw new Error("Name is required!");
-	}
-	// checks if a ans_register was provided
-	if (!ans_register) {
-		throw new Error("ANS Register is required!");
-	}
-	// checks if a reach was provided
-	if (!reach) {
-		throw new Error("Reach is required!");
-	}
+  // checks if a name was provided
+  if (!name) {
+    throw new Error("Name is required!");
+  }
+  // checks if a ans_register was provided
+  if (!ans_register) {
+    throw new Error("ANS Register is required!");
+  }
+  // checks if a reach was provided
+  if (!reach) {
+    throw new Error("Reach is required!");
+  }
 
-	return next();
+  return next();
 };

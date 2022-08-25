@@ -1,6 +1,5 @@
 import { prisma } from "@database/prismaClient";
 
-
 interface ICreateContractPlanDeal {
   id_contract: string;
   id_plan: string;
@@ -56,7 +55,7 @@ export class CreateContractPlanDealUseCase {
             age_49_53,
             age_54_58,
             age_59_above,
-          }
+          },
         },
       },
       include: {

@@ -1,6 +1,5 @@
 import { prisma } from "@database/prismaClient";
 
-
 interface ICreateContract {
   number: string;
   startDate: string;
@@ -22,7 +21,7 @@ export class CreateContractUseCase {
       include: {
         employer: true,
         operator: true,
-      }
+      },
     });
 
     return contract;

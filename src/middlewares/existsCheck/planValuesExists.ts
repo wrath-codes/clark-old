@@ -10,39 +10,39 @@ import { NextFunction, Request, Response } from "express";
  */
 
 export const planValuesExists = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_plan } = request.params;
+  const { id_plan } = request.params;
 
-	const planValues = await prisma.planValues.findFirst({
-		where: { planId: id_plan },
-	});
+  const planDeal = await prisma.planDeals.findFirst({
+    where: { planId: id_plan },
+  });
 
-	if (planValues) {
-		throw new Error("The plan already has its values");
-	}
+  if (planDeal.values) {
+    throw new Error("The plan already has its values");
+  }
 
-	return next();
+  return next();
 };
 
 export const planValuesExistsDeleteUpdate = async (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ) => {
-	const { id_plan } = request.params;
+  const { id_plan } = request.params;
 
-	const planValues = await prisma.planValues.findFirst({
-		where: { planId: id_plan },
-	});
+  const planValues = await prisma.planValues.findFirst({
+    where: { planId: id_plan },
+  });
 
-	console.log(planValues);
+  console.log(planValues);
 
-	if (planValues) {
-		return next();
-	}
+  if (planValues) {
+    return next();
+  }
 
-	throw new Error("This plan doesn't have values!");
+  throw new Error("This plan doesn't have values!");
 };

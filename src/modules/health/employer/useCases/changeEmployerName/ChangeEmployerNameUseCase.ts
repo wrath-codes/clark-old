@@ -1,4 +1,5 @@
 import { prisma } from "@database/prismaClient";
+
 import { slugifyName } from "@utils/slugfyName";
 
 export class ChangeEmployerNameUseCase {

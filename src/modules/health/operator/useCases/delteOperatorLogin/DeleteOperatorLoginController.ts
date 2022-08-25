@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import { DeleteOperatorLoginUseCase } from "./DeleteOperatorLoginUseCase";
 
 /**
@@ -10,10 +11,10 @@ import { DeleteOperatorLoginUseCase } from "./DeleteOperatorLoginUseCase";
  */
 
 export class DeleteOperatorLoginController {
-	async handle(req: Request, res: Response) {
-		const { id_operator } = req.params;
-		const deleteOperatorLoginController = new DeleteOperatorLoginUseCase();
-		await deleteOperatorLoginController.execute(id_operator);
-		res.status(200).json({ message: "Operator login deleted successfully" });
-	}
+  async handle(req: Request, res: Response) {
+    const { id_operator } = req.params;
+    const deleteOperatorLoginController = new DeleteOperatorLoginUseCase();
+    await deleteOperatorLoginController.execute(id_operator);
+    res.status(200).json({ message: "Operator login deleted successfully" });
+  }
 }
